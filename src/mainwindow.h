@@ -18,8 +18,11 @@ public:
     ~MainWindow();
 
 private:
+    typedef QVector< QWidget* > Pages;
+
     Ui::MainWindow *ui;
 
+    Pages pages;
     Configuration configuration;
 };
 
