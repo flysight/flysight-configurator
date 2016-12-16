@@ -34,16 +34,16 @@ public:
     } Mode;
 
     typedef enum {
-        Silence      = 0,
+        NoTone       = 0,
         Clamp        = 1,
         Chirp        = 2,
         ChirpReverse = 3
     } Limits;
 
     typedef enum {
-        km    = 0,
-        miles = 1,
-        knots = 2
+        Kilometers = 0,
+        Miles      = 1,
+        Knots      = 2
     } Units;
 
     typedef enum {
@@ -117,6 +117,8 @@ private:
 
     Alarms alarms;
     Windows windows;
+
+    void initConfiguration();
 };
 
 #endif // MAINWINDOW_H
