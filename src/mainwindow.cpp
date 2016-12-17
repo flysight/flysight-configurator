@@ -8,6 +8,7 @@
 #include "configurationpage.h"
 #include "generalform.h"
 #include "rateform.h"
+#include "speechform.h"
 #include "toneform.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -20,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
     pages.append(new GeneralForm());
     pages.append(new ToneForm());
     pages.append(new RateForm());
+    pages.append(new SpeechForm());
 
     // Create interface components
     QListWidget *listWidget = new QListWidget();

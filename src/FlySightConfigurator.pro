@@ -29,16 +29,19 @@ SOURCES += main.cpp\
     generalform.cpp \
     configurationpage.cpp \
     toneform.cpp \
-    rateform.cpp
+    rateform.cpp \
+    speechform.cpp
 
 HEADERS  += mainwindow.h \
     configuration.h \
     generalform.h \
     configurationpage.h \
     toneform.h \
-    rateform.h
+    rateform.h \
+    speechform.h
 
 FORMS    += mainwindow.ui \
     generalform.ui \
     toneform.ui \
-    rateform.ui
+    rateform.ui \
+    speechform.ui
