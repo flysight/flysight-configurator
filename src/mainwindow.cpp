@@ -7,6 +7,7 @@
 
 #include "configurationpage.h"
 #include "generalform.h"
+#include "initializationform.h"
 #include "rateform.h"
 #include "speechform.h"
 #include "thresholdsform.h"
@@ -24,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
     pages.append(new RateForm());
     pages.append(new SpeechForm());
     pages.append(new ThresholdsForm());
+    pages.append(new InitializationForm());
 
     // Create interface components
     QListWidget *listWidget = new QListWidget();
