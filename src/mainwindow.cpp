@@ -2,8 +2,10 @@
 #include "ui_mainwindow.h"
 
 #include <QHBoxLayout>
+#include <QListWidget>
 #include <QStackedWidget>
 
+#include "configurationpage.h"
 #include "generalform.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -15,16 +17,21 @@ MainWindow::MainWindow(QWidget *parent) :
     // Create configuration pages
     pages.append(new GeneralForm());
 
-    // Add pages to configuration window
+    // Create interface components
+    QListWidget *listWidget = new QListWidget();
     QStackedWidget *stackedWidget = new QStackedWidget();
-    foreach(QWidget *widget, pages)
+
+    // Add pages to configuration window
+    foreach(ConfigurationPage *page, pages)
     {
-        stackedWidget->addWidget(widget);
+        listWidget->addItem(page->title());
+        stackedWidget->addWidget(page);
     }
     stackedWidget->setCurrentIndex(0);
 
     // Lay out main window
     QHBoxLayout *layout = new QHBoxLayout();
+    layout->addWidget(listWidget);
     layout->addWidget(stackedWidget);
 
     // Create new central widget

@@ -26,11 +26,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp\
         mainwindow.cpp \
     configuration.cpp \
-    generalform.cpp
+    generalform.cpp \
+    configurationpage.cpp
 
 HEADERS  += mainwindow.h \
     configuration.h \
-    generalform.h
+    generalform.h \
+    configurationpage.h
 
 FORMS    += mainwindow.ui \
     generalform.ui

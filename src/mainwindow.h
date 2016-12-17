@@ -5,6 +5,8 @@
 
 #include "configuration.h"
 
+class ConfigurationPage;
+
 namespace Ui {
 class MainWindow;
 }
@@ -18,7 +20,7 @@ public:
     ~MainWindow();
 
 private:
-    typedef QVector< QWidget* > Pages;
+    typedef QVector< ConfigurationPage* > Pages;
 
     Ui::MainWindow *ui;
 
