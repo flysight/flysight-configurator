@@ -7,6 +7,7 @@
 
 #include "configurationpage.h"
 #include "generalform.h"
+#include "toneform.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -16,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Create configuration pages
     pages.append(new GeneralForm());
+    pages.append(new ToneForm());
 
     // Create interface components
     QListWidget *listWidget = new QListWidget();
@@ -40,6 +42,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Set the new central widget
     setCentralWidget(window);
+
+    // Connect list widget to stacked widget
+    connect(listWidget, SIGNAL(currentRowChanged(int)),
+            stackedWidget, SLOT(setCurrentIndex(int)));
 }
 
 MainWindow::~MainWindow()

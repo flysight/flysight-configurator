@@ -27,12 +27,15 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     configuration.cpp \
     generalform.cpp \
-    configurationpage.cpp
+    configurationpage.cpp \
+    toneform.cpp
 
 HEADERS  += mainwindow.h \
     configuration.h \
     generalform.h \
-    configurationpage.h
+    configurationpage.h \
+    toneform.h
 
 FORMS    += mainwindow.ui \
-    generalform.ui
+    generalform.ui \
+    toneform.ui
