@@ -5,6 +5,7 @@
 #include <QListWidget>
 #include <QStackedWidget>
 
+#include "alarmform.h"
 #include "configurationpage.h"
 #include "generalform.h"
 #include "initializationform.h"
@@ -26,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
     pages.append(new SpeechForm());
     pages.append(new ThresholdsForm());
     pages.append(new InitializationForm());
+    pages.append(new AlarmForm());
 
     // Create interface components
     QListWidget *listWidget = new QListWidget();
