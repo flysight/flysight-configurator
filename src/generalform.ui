@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>131</width>
-    <height>108</height>
+    <width>156</width>
+    <height>154</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -49,7 +49,24 @@
        </property>
       </widget>
      </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>Timezone offset:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="timezoneEdit"/>
+     </item>
     </layout>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="adjustedCheckBox">
+     <property name="text">
+      <string>Adjust speeds to sea level</string>
+     </property>
+    </widget>
    </item>
    <item>
     <spacer name="verticalSpacer">
