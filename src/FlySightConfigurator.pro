@@ -30,7 +30,8 @@ SOURCES += main.cpp\
     configurationpage.cpp \
     toneform.cpp \
     rateform.cpp \
-    speechform.cpp
+    speechform.cpp \
+    thresholdsform.cpp
 
 HEADERS  += mainwindow.h \
     configuration.h \
@@ -38,10 +39,12 @@ HEADERS  += mainwindow.h \
     configurationpage.h \
     toneform.h \
     rateform.h \
-    speechform.h
+    speechform.h \
+    thresholdsform.h
 
 FORMS    += mainwindow.ui \
     generalform.ui \
     toneform.ui \
     rateform.ui \
-    speechform.ui
+    speechform.ui \
+    thresholdsform.ui
