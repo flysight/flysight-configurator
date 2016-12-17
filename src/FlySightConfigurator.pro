@@ -28,14 +28,17 @@ SOURCES += main.cpp\
     configuration.cpp \
     generalform.cpp \
     configurationpage.cpp \
-    toneform.cpp
+    toneform.cpp \
+    rateform.cpp
 
 HEADERS  += mainwindow.h \
     configuration.h \
     generalform.h \
     configurationpage.h \
-    toneform.h
+    toneform.h \
+    rateform.h
 
 FORMS    += mainwindow.ui \
     generalform.ui \
-    toneform.ui
+    toneform.ui \
+    rateform.ui
