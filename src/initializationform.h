@@ -19,9 +19,6 @@ public:
 
 private:
     Ui::InitializationForm *ui;
-
-private slots:
-    void browse();
 };
 
 #endif // INITIALIZATIONFORM_H
