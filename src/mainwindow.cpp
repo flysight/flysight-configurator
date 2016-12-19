@@ -10,6 +10,7 @@
 #include "generalform.h"
 #include "initializationform.h"
 #include "rateform.h"
+#include "silenceform.h"
 #include "speechform.h"
 #include "thresholdsform.h"
 #include "toneform.h"
@@ -28,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent) :
     pages.append(new ThresholdsForm());
     pages.append(new InitializationForm());
     pages.append(new AlarmForm());
+    pages.append(new SilenceForm());
 
     // Create interface components
     QListWidget *listWidget = new QListWidget();
