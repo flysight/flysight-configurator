@@ -1,6 +1,8 @@
 #include "alarmform.h"
 #include "ui_alarmform.h"
 
+#include <QComboBox>
+
 AlarmForm::AlarmForm(QWidget *parent) :
     ConfigurationPage(parent),
     ui(new Ui::AlarmForm)
@@ -35,6 +37,16 @@ void AlarmForm::add()
 {
     int i = ui->tableWidget->rowCount();
     ui->tableWidget->insertRow(i);
+
+    QComboBox *combo = new QComboBox;
+
+    combo->addItem("No alarm");
+    combo->addItem("Beep");
+    combo->addItem("Chirp up");
+    combo->addItem("Chirp down");
+    combo->addItem("Play file");
+
+    ui->tableWidget->setCellWidget(i, 1, combo);
 }
 
 void AlarmForm::remove()
