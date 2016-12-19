@@ -23,6 +23,7 @@ private:
 private slots:
     void add();
     void remove();
+    void updateControls();
 };
 
 #endif // ALARMFORM_H
