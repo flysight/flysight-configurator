@@ -3,6 +3,8 @@
 
 #include "configurationpage.h"
 
+class Configuration;
+
 namespace Ui {
 class GeneralForm;
 }
@@ -19,6 +21,9 @@ public:
 
 private:
     Ui::GeneralForm *ui;
+
+public slots:
+    void setConfiguration(const Configuration &configuration);
 };
 
 #endif // GENERALFORM_H

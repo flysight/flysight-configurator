@@ -1,6 +1,8 @@
 #include "generalform.h"
 #include "ui_generalform.h"
 
+#include "configuration.h"
+
 GeneralForm::GeneralForm(QWidget *parent) :
     ConfigurationPage(parent),
     ui(new Ui::GeneralForm)
@@ -20,4 +22,13 @@ GeneralForm::GeneralForm(QWidget *parent) :
 GeneralForm::~GeneralForm()
 {
     delete ui;
+}
+
+void GeneralForm::setConfiguration(const Configuration &configuration)
+{
+    ui->modelComboBox->setCurrentIndex(configuration.model);
+    ui->rateSpinBox->setValue(configuration.rate);
+    ui->timezoneEdit->setText(
+                QString::number(configuration.timeZoneOffset));
+    ui->adjustedCheckBox->setChecked(configuration.adjustSpeed);
 }
