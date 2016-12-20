@@ -3,6 +3,8 @@
 
 #include "configurationpage.h"
 
+class Configuration;
+
 namespace Ui {
 class RateForm;
 }
@@ -19,6 +21,9 @@ public:
 
 private:
     Ui::RateForm *ui;
+
+public slots:
+    void setConfiguration(const Configuration &configuration);
 };
 
 #endif // RATEFORM_H
