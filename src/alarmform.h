@@ -3,6 +3,8 @@
 
 #include "configurationpage.h"
 
+class Configuration;
+
 namespace Ui {
 class AlarmForm;
 }
@@ -20,8 +22,11 @@ public:
 private:
     Ui::AlarmForm *ui;
 
+public slots:
+    void setConfiguration(const Configuration &configuration);
+
 private slots:
-    void add();
+    int add();
     void remove();
     void updateControls();
 };

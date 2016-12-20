@@ -40,6 +40,8 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         listWidget->addItem(page->title());
         stackedWidget->addWidget(page);
+        connect(this, SIGNAL(configurationChanged(Configuration)),
+                page, SLOT(setConfiguration(Configuration)));
     }
     stackedWidget->setCurrentIndex(0);
 
@@ -58,6 +60,9 @@ MainWindow::MainWindow(QWidget *parent) :
     // Connect list widget to stacked widget
     connect(listWidget, SIGNAL(currentRowChanged(int)),
             stackedWidget, SLOT(setCurrentIndex(int)));
+
+    // Initial update
+    emit configurationChanged(configuration);
 }
 
 MainWindow::~MainWindow()

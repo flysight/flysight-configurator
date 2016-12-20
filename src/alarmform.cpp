@@ -3,6 +3,8 @@
 
 #include <QComboBox>
 
+#include "configuration.h"
+
 AlarmForm::AlarmForm(QWidget *parent) :
     ConfigurationPage(parent),
     ui(new Ui::AlarmForm)
@@ -33,7 +35,7 @@ AlarmForm::~AlarmForm()
     delete ui;
 }
 
-void AlarmForm::add()
+int AlarmForm::add()
 {
     int i = ui->tableWidget->rowCount();
     ui->tableWidget->insertRow(i);
@@ -47,6 +49,8 @@ void AlarmForm::add()
     combo->addItem("Play file");
 
     ui->tableWidget->setCellWidget(i, 1, combo);
+
+    return i;
 }
 
 void AlarmForm::remove()
@@ -62,4 +66,34 @@ void AlarmForm::updateControls()
 {
     QItemSelectionModel *select = ui->tableWidget->selectionModel();
     ui->removeButton->setEnabled(select->hasSelection());
+}
+
+void AlarmForm::setConfiguration(const Configuration &configuration)
+{
+    ui->windowAboveEdit->setText(
+                QString::number(configuration.alarmWindowAbove));
+    ui->windowBelowEdit->setText(
+                QString::number(configuration.alarmWindowBelow));
+    ui->groundElevationEdit->setText(
+                QString::number(configuration.groundElevation));
+
+    // Remove all alarms
+    while (ui->tableWidget->rowCount() > 0)
+    {
+        ui->tableWidget->removeRow(0);
+    }
+
+    // Add alarms
+    foreach (Configuration::Alarm alarm, configuration.alarms)
+    {
+        int i = add();
+
+        ui->tableWidget->setItem(i, 0, new QTableWidgetItem(
+                                     QString::number(alarm.elevation)));
+        ui->tableWidget->setItem(i, 2, new QTableWidgetItem(
+                                     alarm.file));
+
+        QComboBox *combo = (QComboBox*) ui->tableWidget->cellWidget(i, 1);
+        combo->setCurrentIndex(alarm.mode);
+    }
 }

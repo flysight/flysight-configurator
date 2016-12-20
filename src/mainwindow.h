@@ -26,6 +26,9 @@ private:
 
     Pages pages;
     Configuration configuration;
+
+signals:
+    void configurationChanged(const Configuration &configuration);
 };
 
 #endif // MAINWINDOW_H
