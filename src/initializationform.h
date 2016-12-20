@@ -3,6 +3,8 @@
 
 #include "configurationpage.h"
 
+class Configuration;
+
 namespace Ui {
 class InitializationForm;
 }
@@ -19,6 +21,9 @@ public:
 
 private:
     Ui::InitializationForm *ui;
+
+public slots:
+    void setConfiguration(const Configuration &configuration);
 };
 
 #endif // INITIALIZATIONFORM_H

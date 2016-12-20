@@ -4,6 +4,8 @@
 #include <QFileDialog>
 #include <QFileInfo>
 
+#include "configuration.h"
+
 InitializationForm::InitializationForm(QWidget *parent) :
     ConfigurationPage(parent),
     ui(new Ui::InitializationForm)
@@ -18,4 +20,10 @@ InitializationForm::InitializationForm(QWidget *parent) :
 InitializationForm::~InitializationForm()
 {
     delete ui;
+}
+
+void InitializationForm::setConfiguration(const Configuration &configuration)
+{
+    ui->modeComboBox->setCurrentIndex(configuration.initMode);
+    ui->filenameEdit->setText(configuration.initFile);
 }
