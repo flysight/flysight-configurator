@@ -31,35 +31,21 @@ MainWindow::MainWindow(QWidget *parent) :
     pages.append(new AlarmForm());
     pages.append(new SilenceForm());
 
-    // Create interface components
-    QListWidget *listWidget = new QListWidget();
-    QStackedWidget *stackedWidget = new QStackedWidget();
-
     // Add pages to configuration window
     foreach(ConfigurationPage *page, pages)
     {
-        listWidget->addItem(page->title());
-        stackedWidget->addWidget(page);
+        ui->listWidget->addItem(page->title());
+        ui->stackedWidget->addWidget(page);
         connect(this, SIGNAL(configurationChanged(Configuration)),
                 page, SLOT(setConfiguration(Configuration)));
     }
-    stackedWidget->setCurrentIndex(0);
 
-    // Lay out main window
-    QHBoxLayout *layout = new QHBoxLayout();
-    layout->addWidget(listWidget);
-    layout->addWidget(stackedWidget);
-
-    // Create new central widget
-    QWidget *window = new QWidget();
-    window->setLayout(layout);
-
-    // Set the new central widget
-    setCentralWidget(window);
+    ui->listWidget->setCurrentRow(0);
+    ui->stackedWidget->setCurrentIndex(0);
 
     // Connect list widget to stacked widget
-    connect(listWidget, SIGNAL(currentRowChanged(int)),
-            stackedWidget, SLOT(setCurrentIndex(int)));
+    connect(ui->listWidget, SIGNAL(currentRowChanged(int)),
+            ui->stackedWidget, SLOT(setCurrentIndex(int)));
 
     // Initial update
     emit configurationChanged(configuration);
