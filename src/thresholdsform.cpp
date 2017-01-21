@@ -1,6 +1,8 @@
 #include "thresholdsform.h"
 #include "ui_thresholdsform.h"
 
+#include "configuration.h"
+
 ThresholdsForm::ThresholdsForm(QWidget *parent) :
     ConfigurationPage(parent),
     ui(new Ui::ThresholdsForm)
@@ -11,4 +13,12 @@ ThresholdsForm::ThresholdsForm(QWidget *parent) :
 ThresholdsForm::~ThresholdsForm()
 {
     delete ui;
+}
+
+void ThresholdsForm::setConfiguration(const Configuration &configuration)
+{
+    ui->verticalEdit->setText(
+                QString::number(configuration.vThreshold));
+    ui->horizontalEdit->setText(
+                QString::number(configuration.hThreshold));
 }

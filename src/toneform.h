@@ -3,6 +3,8 @@
 
 #include "configurationpage.h"
 
+class Configuration;
+
 namespace Ui {
 class ToneForm;
 }
@@ -19,6 +21,9 @@ public:
 
 private:
     Ui::ToneForm *ui;
+
+public slots:
+    void setConfiguration(const Configuration &configuration);
 };
 
 #endif // TONEFORM_H

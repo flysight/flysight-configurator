@@ -1,6 +1,8 @@
 #include "toneform.h"
 #include "ui_toneform.h"
 
+#include "configuration.h"
+
 ToneForm::ToneForm(QWidget *parent) :
     ConfigurationPage(parent),
     ui(new Ui::ToneForm)
@@ -22,4 +24,15 @@ ToneForm::ToneForm(QWidget *parent) :
 ToneForm::~ToneForm()
 {
     delete ui;
+}
+
+void ToneForm::setConfiguration(const Configuration &configuration)
+{
+    ui->modeComboBox->setCurrentIndex(configuration.toneMode);
+    ui->minimumEdit->setText(
+                QString::number(configuration.minTone));
+    ui->maximumEdit->setText(
+                QString::number(configuration.maxTone));
+    ui->limitComboBox->setCurrentIndex(configuration.limits);
+    ui->volumeSpinBox->setValue(configuration.toneVolume);
 }

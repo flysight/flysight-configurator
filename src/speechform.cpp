@@ -1,6 +1,8 @@
 #include "speechform.h"
 #include "ui_speechform.h"
 
+#include "configuration.h"
+
 SpeechForm::SpeechForm(QWidget *parent) :
     ConfigurationPage(parent),
     ui(new Ui::SpeechForm)
@@ -20,4 +22,14 @@ SpeechForm::SpeechForm(QWidget *parent) :
 SpeechForm::~SpeechForm()
 {
     delete ui;
+}
+
+void SpeechForm::setConfiguration(const Configuration &configuration)
+{
+    ui->modeComboBox->setCurrentIndex(configuration.speechMode);
+    ui->unitsComboBox->setCurrentIndex(configuration.speechUnits);
+    ui->rateEdit->setText(
+                QString::number(configuration.speechRate));
+    ui->decimalsSpinBox->setValue(configuration.speechDecimals);
+    ui->volumeSpinBox->setValue(configuration.speechVolume);
 }

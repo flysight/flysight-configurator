@@ -3,6 +3,8 @@
 
 #include "configurationpage.h"
 
+class Configuration;
+
 namespace Ui {
 class SpeechForm;
 }
@@ -19,6 +21,9 @@ public:
 
 private:
     Ui::SpeechForm *ui;
+
+public slots:
+    void setConfiguration(const Configuration &configuration);
 };
 
 #endif // SPEECHFORM_H

@@ -3,6 +3,8 @@
 
 #include "configurationpage.h"
 
+class Configuration;
+
 namespace Ui {
 class ThresholdsForm;
 }
@@ -19,6 +21,9 @@ public:
 
 private:
     Ui::ThresholdsForm *ui;
+
+public slots:
+    void setConfiguration(const Configuration &configuration);
 };
 
 #endif // THRESHOLDSFORM_H

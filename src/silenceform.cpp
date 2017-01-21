@@ -3,6 +3,8 @@
 
 #include <QComboBox>
 
+#include "configuration.h"
+
 SilenceForm::SilenceForm(QWidget *parent) :
     ConfigurationPage(parent),
     ui(new Ui::SilenceForm)
@@ -33,10 +35,11 @@ SilenceForm::~SilenceForm()
     delete ui;
 }
 
-void SilenceForm::add()
+int SilenceForm::add()
 {
     int i = ui->tableWidget->rowCount();
     ui->tableWidget->insertRow(i);
+    return i;
 }
 
 void SilenceForm::remove()
@@ -52,4 +55,24 @@ void SilenceForm::updateControls()
 {
     QItemSelectionModel *select = ui->tableWidget->selectionModel();
     ui->removeButton->setEnabled(select->hasSelection());
+}
+
+void SilenceForm::setConfiguration(const Configuration &configuration)
+{
+    // Remove all silence windows
+    while (ui->tableWidget->rowCount() > 0)
+    {
+        ui->tableWidget->removeRow(0);
+    }
+
+    // Add silence windows
+    foreach (Configuration::Window window, configuration.windows)
+    {
+        int i = add();
+
+        ui->tableWidget->setItem(i, 0, new QTableWidgetItem(
+                                     QString::number(window.top)));
+        ui->tableWidget->setItem(i, 1, new QTableWidgetItem(
+                                     QString::number(window.bottom)));
+    }
 }
