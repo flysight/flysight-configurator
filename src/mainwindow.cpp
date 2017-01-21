@@ -74,6 +74,8 @@ void MainWindow::on_openButton_clicked()
     QFile file(fileName);
     if (file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
+        configuration = Configuration();
+
         QTextStream in(&file);
         while (!in.atEnd())
         {
