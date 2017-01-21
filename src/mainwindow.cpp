@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <QFileDialog>
 #include <QHBoxLayout>
 #include <QListWidget>
 #include <QStackedWidget>
@@ -54,4 +55,9 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::on_openButton_clicked()
+{
+    QString fileName = QFileDialog::getOpenFileName(this, "Open");
 }

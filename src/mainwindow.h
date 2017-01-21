@@ -29,6 +29,9 @@ private:
 
 signals:
     void configurationChanged(const Configuration &configuration);
+
+private slots:
+    void on_openButton_clicked();
 };
 
 #endif // MAINWINDOW_H
