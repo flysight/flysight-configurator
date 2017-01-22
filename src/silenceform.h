@@ -16,6 +16,7 @@ public:
     ~SilenceForm();
 
     QString title() const { return "Silence"; }
+    void updateConfiguration(Configuration &configuration);
 
 private:
     Ui::SilenceForm *ui;

@@ -39,6 +39,10 @@ int SilenceForm::add()
 {
     int i = ui->tableWidget->rowCount();
     ui->tableWidget->insertRow(i);
+
+    ui->tableWidget->setItem(i, 0, new QTableWidgetItem());
+    ui->tableWidget->setItem(i, 1, new QTableWidgetItem());
+
     return i;
 }
 
@@ -74,5 +78,23 @@ void SilenceForm::setConfiguration(const Configuration &configuration)
                                      QString::number(window.top)));
         ui->tableWidget->setItem(i, 1, new QTableWidgetItem(
                                      QString::number(window.bottom)));
+    }
+}
+
+void SilenceForm::updateConfiguration(
+        Configuration &configuration)
+{
+    // Clear windows in configuration
+    configuration.windows.clear();
+
+    // Add windows from interface
+    for (int i = 0; i < ui->tableWidget->rowCount(); ++i)
+    {
+        Configuration::Window window;
+
+        window.top = ui->tableWidget->item(i, 0)->text().toInt();
+        window.bottom = ui->tableWidget->item(i, 1)->text().toInt();
+
+        configuration.windows.push_back(window);
     }
 }

@@ -33,3 +33,13 @@ void SpeechForm::setConfiguration(const Configuration &configuration)
     ui->decimalsSpinBox->setValue(configuration.speechDecimals);
     ui->volumeSpinBox->setValue(configuration.speechVolume);
 }
+
+void SpeechForm::updateConfiguration(
+        Configuration &configuration)
+{
+    configuration.speechMode = (Configuration::Mode) ui->modeComboBox->currentIndex();
+    configuration.speechUnits = (Configuration::Units) ui->unitsComboBox->currentIndex();
+    configuration.speechRate = ui->rateEdit->text().toInt();
+    configuration.speechDecimals = ui->decimalsSpinBox->value();
+    configuration.speechVolume = ui->volumeSpinBox->value();
+}

@@ -16,6 +16,7 @@ public:
     ~ThresholdsForm();
 
     QString title() const { return "Thresholds"; }
+    void updateConfiguration(Configuration &configuration);
 
 private:
     Ui::ThresholdsForm *ui;

@@ -16,6 +16,7 @@ public:
     ~ToneForm();
 
     QString title() const { return "Tone"; }
+    void updateConfiguration(Configuration &configuration);
 
 private:
     Ui::ToneForm *ui;

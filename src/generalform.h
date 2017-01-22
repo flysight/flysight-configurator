@@ -16,6 +16,7 @@ public:
     ~GeneralForm();
 
     QString title() const { return "General"; }
+    void updateConfiguration(Configuration &configuration);
 
 private:
     Ui::GeneralForm *ui;

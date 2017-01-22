@@ -22,3 +22,10 @@ void ThresholdsForm::setConfiguration(const Configuration &configuration)
     ui->horizontalEdit->setText(
                 QString::number(configuration.hThreshold));
 }
+
+void ThresholdsForm::updateConfiguration(
+        Configuration &configuration)
+{
+    configuration.vThreshold = ui->verticalEdit->text().toInt();
+    configuration.hThreshold = ui->horizontalEdit->text().toInt();
+}

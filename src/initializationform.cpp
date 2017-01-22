@@ -27,3 +27,10 @@ void InitializationForm::setConfiguration(const Configuration &configuration)
     ui->modeComboBox->setCurrentIndex(configuration.initMode);
     ui->filenameEdit->setText(configuration.initFile);
 }
+
+void InitializationForm::updateConfiguration(
+        Configuration &configuration)
+{
+    configuration.initMode = (Configuration::InitMode) ui->modeComboBox->currentIndex();
+    configuration.initFile = ui->filenameEdit->text();
+}

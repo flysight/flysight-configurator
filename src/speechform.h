@@ -16,6 +16,7 @@ public:
     ~SpeechForm();
 
     QString title() const { return "Speech"; }
+    void updateConfiguration(Configuration &configuration);
 
 private:
     Ui::SpeechForm *ui;

@@ -40,6 +40,9 @@ int AlarmForm::add()
     int i = ui->tableWidget->rowCount();
     ui->tableWidget->insertRow(i);
 
+    ui->tableWidget->setItem(i, 0, new QTableWidgetItem());
+    ui->tableWidget->setItem(i, 2, new QTableWidgetItem());
+
     QComboBox *combo = new QComboBox;
 
     combo->addItem("No alarm");
@@ -101,5 +104,24 @@ void AlarmForm::setConfiguration(const Configuration &configuration)
 void AlarmForm::updateConfiguration(
         Configuration &configuration)
 {
-    Q_UNUSED(configuration);
+    configuration.alarmWindowAbove = ui->windowAboveEdit->text().toInt();
+    configuration.alarmWindowBelow = ui->windowBelowEdit->text().toInt();
+    configuration.groundElevation = ui->groundElevationEdit->text().toInt();
+
+    // Clear alarms in configuration
+    configuration.alarms.clear();
+
+    // Add alarms from interface
+    for (int i = 0; i < ui->tableWidget->rowCount(); ++i)
+    {
+        Configuration::Alarm alarm;
+
+        alarm.elevation = ui->tableWidget->item(i, 0)->text().toInt();
+        alarm.file = ui->tableWidget->item(i, 2)->text();
+
+        QComboBox *combo = (QComboBox*) ui->tableWidget->cellWidget(i, 1);
+        alarm.mode = (Configuration::AlarmMode) combo->currentIndex();
+
+        configuration.alarms.push_back(alarm);
+    }
 }

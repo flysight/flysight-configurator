@@ -36,3 +36,13 @@ void ToneForm::setConfiguration(const Configuration &configuration)
     ui->limitComboBox->setCurrentIndex(configuration.limits);
     ui->volumeSpinBox->setValue(configuration.toneVolume);
 }
+
+void ToneForm::updateConfiguration(
+        Configuration &configuration)
+{
+    configuration.toneMode = (Configuration::Mode) ui->modeComboBox->currentIndex();
+    configuration.minTone = ui->minimumEdit->text().toInt();
+    configuration.maxTone = ui->maximumEdit->text().toInt();
+    configuration.limits = (Configuration::Limits) ui->limitComboBox->currentIndex();
+    configuration.toneVolume = ui->volumeSpinBox->value();
+}

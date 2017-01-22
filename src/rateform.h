@@ -18,6 +18,7 @@ public:
     ~RateForm();
 
     QString title() const { return "Rate"; }
+    void updateConfiguration(Configuration &configuration);
 
 private:
     Ui::RateForm *ui;

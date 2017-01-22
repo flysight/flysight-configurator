@@ -45,3 +45,17 @@ void RateForm::setConfiguration(const Configuration &configuration)
                 QString::number(configuration.maxRate));
     ui->flatlineCheckBox->setChecked(configuration.flatline);
 }
+
+void RateForm::updateConfiguration(
+        Configuration &configuration)
+{
+    int i = ui->modeComboBox->currentIndex();
+    if (i <= 4) configuration.rateMode = (Configuration::Mode) i;
+    else        configuration.rateMode = (Configuration::Mode) (i + 3);
+
+    configuration.minRateValue = ui->minimumValueEdit->text().toInt();
+    configuration.maxRateValue = ui->maximumValueEdit->text().toInt();
+    configuration.minRate = ui->minimumEdit->text().toInt();
+    configuration.maxRate = ui->maximumEdit->text().toInt();
+    configuration.flatline = ui->flatlineCheckBox->isChecked();
+}

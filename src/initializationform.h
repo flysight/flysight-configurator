@@ -16,6 +16,7 @@ public:
     ~InitializationForm();
 
     QString title() const { return "Initialization"; }
+    void updateConfiguration(Configuration &configuration);
 
 private:
     Ui::InitializationForm *ui;
