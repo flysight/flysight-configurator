@@ -6,6 +6,7 @@
 #include "configuration.h"
 
 class ConfigurationPage;
+class QTextStream;
 
 namespace Ui {
 class MainWindow;
@@ -27,11 +28,15 @@ private:
     Pages pages;
     Configuration configuration;
 
+    void saveAlarm(QTextStream &out, const Configuration::Alarm &alarm, bool firstAlarm);
+    void saveWindow(QTextStream &out, const Configuration::Window window);
+
 signals:
     void configurationChanged(const Configuration &configuration);
 
 private slots:
     void on_openButton_clicked();
+    void on_saveAsButton_clicked();
 };
 
 #endif // MAINWINDOW_H

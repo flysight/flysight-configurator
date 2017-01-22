@@ -31,7 +31,7 @@ Configuration::Configuration()
     timeZoneOffset = 0;
 
     initMode = NoInit;
-    initFile = QString();
+    initFile = QString("0");
 
     alarmWindowAbove = 0;
     alarmWindowBelow = 0;
