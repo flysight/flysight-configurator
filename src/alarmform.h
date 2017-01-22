@@ -3,8 +3,6 @@
 
 #include "configurationpage.h"
 
-class Configuration;
-
 namespace Ui {
 class AlarmForm;
 }
@@ -18,6 +16,7 @@ public:
     ~AlarmForm();
 
     QString title() const { return "Alarms"; }
+    void updateConfiguration(Configuration &configuration);
 
 private:
     Ui::AlarmForm *ui;

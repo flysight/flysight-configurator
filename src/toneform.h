@@ -3,8 +3,6 @@
 
 #include "configurationpage.h"
 
-class Configuration;
-
 namespace Ui {
 class ToneForm;
 }

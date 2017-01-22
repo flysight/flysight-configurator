@@ -5,3 +5,9 @@ ConfigurationPage::ConfigurationPage(QWidget *parent) :
 {
 
 }
+
+void ConfigurationPage::updateConfiguration(
+        Configuration &configuration)
+{
+    Q_UNUSED(configuration);
+}

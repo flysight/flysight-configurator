@@ -188,6 +188,11 @@ void MainWindow::on_saveAsButton_clicked()
     QFile file(fileName);
     if (file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
+        foreach(ConfigurationPage *page, pages)
+        {
+            page->updateConfiguration(configuration);
+        }
+
         QTextStream out(&file);
 
         out << "; For information on configuring FlySight, please go to" << endl;

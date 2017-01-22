@@ -97,3 +97,9 @@ void AlarmForm::setConfiguration(const Configuration &configuration)
         combo->setCurrentIndex(alarm.mode);
     }
 }
+
+void AlarmForm::updateConfiguration(
+        Configuration &configuration)
+{
+    Q_UNUSED(configuration);
+}
