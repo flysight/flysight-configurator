@@ -229,6 +229,7 @@ void MainWindow::on_saveAsButton_clicked()
         out << "                  ;   0 = No tone" << endl;
         out << "                  ;   1 = Min/max tone" << endl;
         out << "                  ;   2 = Chirp up/down" << endl;
+        out << "                  ;   3 = Chirp down/up" << endl;
         out << "Volume:     " << QString("%1").arg(configuration.toneVolume, 5) << " ; 0 (min) to 8 (max)" << endl << endl;
 
         out << "; Rate settings" << endl << endl;
