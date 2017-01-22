@@ -195,101 +195,101 @@ void MainWindow::on_saveAsButton_clicked()
 
         out << "; GPS settings" << endl << endl;
 
-        out << "Model:     " << configuration.model << "     ; Dynamic model" << endl;
-        out << "                 ;   0 = Portable" << endl;
-        out << "                 ;   2 = Stationary" << endl;
-        out << "                 ;   3 = Pedestrian" << endl;
-        out << "                 ;   4 = Automotive" << endl;
-        out << "                 ;   5 = Sea" << endl;
-        out << "                 ;   6 = Airborne with < 1 G acceleration" << endl;
-        out << "                 ;   7 = Airborne with < 2 G acceleration" << endl;
-        out << "                 ;   8 = Airborne with < 4 G acceleration" << endl;
-        out << "Rate:      " << configuration.rate << "   ; Measurement rate (ms)" << endl << endl;
+        out << "Model:      " << QString("%1").arg(configuration.model, 5) << " ; Dynamic model" << endl;
+        out << "                  ;   0 = Portable" << endl;
+        out << "                  ;   2 = Stationary" << endl;
+        out << "                  ;   3 = Pedestrian" << endl;
+        out << "                  ;   4 = Automotive" << endl;
+        out << "                  ;   5 = Sea" << endl;
+        out << "                  ;   6 = Airborne with < 1 G acceleration" << endl;
+        out << "                  ;   7 = Airborne with < 2 G acceleration" << endl;
+        out << "                  ;   8 = Airborne with < 4 G acceleration" << endl;
+        out << "Rate:       " << QString("%1").arg(configuration.rate, 5) << " ; Measurement rate (ms)" << endl << endl;
 
         out << "; Tone settings" << endl << endl;
 
-        out << "Mode:      " << configuration.toneMode << "     ; Measurement mode" << endl;
-        out << "                 ;   0 = Horizontal speed" << endl;
-        out << "                 ;   1 = Vertical speed" << endl;
-        out << "                 ;   2 = Glide ratio" << endl;
-        out << "                 ;   3 = Inverse glide ratio" << endl;
-        out << "                 ;   4 = Total speed" << endl;
-        out << "Min:       " << configuration.minTone << "     ; Lowest pitch value" << endl;
-        out << "                 ;   cm/s        in Mode 0, 1, or 4" << endl;
-        out << "                 ;   ratio * 100 in Mode 2 or 3" << endl;
-        out << "Max:       " << configuration.maxTone << "   ; Highest pitch value" << endl;
-        out << "                 ;   cm/s        in Mode 0, 1, or 4" << endl;
-        out << "                 ;   ratio * 100 in Mode 2 or 3" << endl;
-        out << "Limits:    " << configuration.limits << "     ; Behaviour when outside bounds" << endl;
-        out << "                 ;   0 = No tone" << endl;
-        out << "                 ;   1 = Min/max tone" << endl;
-        out << "                 ;   2 = Chirp up/down" << endl;
-        out << "Volume:    " << configuration.toneVolume << "     ; 0 (min) to 8 (max)" << endl << endl;
+        out << "Mode:       " << QString("%1").arg(configuration.toneMode, 5) << " ; Measurement mode" << endl;
+        out << "                  ;   0 = Horizontal speed" << endl;
+        out << "                  ;   1 = Vertical speed" << endl;
+        out << "                  ;   2 = Glide ratio" << endl;
+        out << "                  ;   3 = Inverse glide ratio" << endl;
+        out << "                  ;   4 = Total speed" << endl;
+        out << "Min:        " << QString("%1").arg(configuration.minTone, 5) << " ; Lowest pitch value" << endl;
+        out << "                  ;   cm/s        in Mode 0, 1, or 4" << endl;
+        out << "                  ;   ratio * 100 in Mode 2 or 3" << endl;
+        out << "Max:        " << QString("%1").arg(configuration.maxTone, 5) << " ; Highest pitch value" << endl;
+        out << "                  ;   cm/s        in Mode 0, 1, or 4" << endl;
+        out << "                  ;   ratio * 100 in Mode 2 or 3" << endl;
+        out << "Limits:     " << QString("%1").arg(configuration.limits, 5) << " ; Behaviour when outside bounds" << endl;
+        out << "                  ;   0 = No tone" << endl;
+        out << "                  ;   1 = Min/max tone" << endl;
+        out << "                  ;   2 = Chirp up/down" << endl;
+        out << "Volume:     " << QString("%1").arg(configuration.toneVolume, 5) << " ; 0 (min) to 8 (max)" << endl << endl;
 
         out << "; Rate settings" << endl << endl;
 
-        out << "Mode_2:    " << configuration.rateMode << "     ; Determines tone rate" << endl;
-        out << "                 ;   0 = Horizontal speed" << endl;
-        out << "                 ;   1 = Vertical speed" << endl;
-        out << "                 ;   2 = Glide ratio" << endl;
-        out << "                 ;   3 = Inverse glide ratio" << endl;
-        out << "                 ;   4 = Total speed" << endl;
-        out << "                 ;   8 = Magnitude of Value 1" << endl;
-        out << "                 ;   9 = Change in Value 1" << endl;
-        out << "Min_Val_2: " << configuration.minRateValue << "   ; Lowest rate value" << endl;
-        out << "                 ;   cm/s          when Mode 2 = 0, 1, or 4" << endl;
-        out << "                 ;   ratio * 100   when Mode 2 = 2 or 3" << endl;
-        out << "                 ;   percent * 100 when Mode 2 = 9" << endl;
-        out << "Max_Val_2: " << configuration.maxRateValue << "  ; Highest rate value" << endl;
-        out << "                 ;   cm/s          when Mode 2 = 0, 1, or 4" << endl;
-        out << "                 ;   ratio * 100   when Mode 2 = 2 or 3" << endl;
-        out << "                 ;   percent * 100 when Mode 2 = 9" << endl;
-        out << "Min_Rate:  " << configuration.minRate << "   ; Minimum rate (Hz * 100)" << endl;
-        out << "Max_Rate:  " << configuration.maxRate << "   ; Maximum rate (Hz * 100)" << endl;
-        out << "Flatline:  " << configuration.flatline << "     ; Flatline at minimum rate" << endl;
-        out << "                 ;   0 = No" << endl;
-        out << "                 ;   1 = Yes" << endl << endl;
+        out << "Mode_2:     " << QString("%1").arg(configuration.rateMode, 5) << " ; Determines tone rate" << endl;
+        out << "                  ;   0 = Horizontal speed" << endl;
+        out << "                  ;   1 = Vertical speed" << endl;
+        out << "                  ;   2 = Glide ratio" << endl;
+        out << "                  ;   3 = Inverse glide ratio" << endl;
+        out << "                  ;   4 = Total speed" << endl;
+        out << "                  ;   8 = Magnitude of Value 1" << endl;
+        out << "                  ;   9 = Change in Value 1" << endl;
+        out << "Min_Val_2:  " << QString("%1").arg(configuration.minRateValue, 5) << " ; Lowest rate value" << endl;
+        out << "                  ;   cm/s          when Mode 2 = 0, 1, or 4" << endl;
+        out << "                  ;   ratio * 100   when Mode 2 = 2 or 3" << endl;
+        out << "                  ;   percent * 100 when Mode 2 = 9" << endl;
+        out << "Max_Val_2:  " << QString("%1").arg(configuration.maxRateValue, 5) << " ; Highest rate value" << endl;
+        out << "                  ;   cm/s          when Mode 2 = 0, 1, or 4" << endl;
+        out << "                  ;   ratio * 100   when Mode 2 = 2 or 3" << endl;
+        out << "                  ;   percent * 100 when Mode 2 = 9" << endl;
+        out << "Min_Rate:   " << QString("%1").arg(configuration.minRate, 5) << " ; Minimum rate (Hz * 100)" << endl;
+        out << "Max_Rate:   " << QString("%1").arg(configuration.maxRate, 5) << " ; Maximum rate (Hz * 100)" << endl;
+        out << "Flatline:   " << QString("%1").arg(configuration.flatline, 5) << " ; Flatline at minimum rate" << endl;
+        out << "                  ;   0 = No" << endl;
+        out << "                  ;   1 = Yes" << endl << endl;
 
         out << "; Speech settings" << endl << endl;
 
-        out << "Sp_Mode:   " << configuration.speechMode << "     ; Speech mode" << endl;
-        out << "                 ;   0 = Horizontal speed" << endl;
-        out << "                 ;   1 = Vertical speed" << endl;
-        out << "                 ;   2 = Glide ratio" << endl;
-        out << "                 ;   3 = Inverse glide ratio" << endl;
-        out << "                 ;   4 = Total speed" << endl;
-        out << "Sp_Units:  " << configuration.speechUnits << "     ; Speech units" << endl;
-        out << "                 ;   0 = km/h" << endl;
-        out << "                 ;   1 = mph" << endl;
-        out << "Sp_Rate:   " << configuration.speechRate << "     ; Speech rate (s)" << endl;
-        out << "                 ;   0 = No speech" << endl;
-        out << "Sp_Dec:    " << configuration.speechDecimals << "     ; Decimal places for speech" << endl;
-        out << "Sp_Volume: " << configuration.speechVolume << "     ; 0 (min) to 8 (max)" << endl << endl;
+        out << "Sp_Mode:    " << QString("%1").arg(configuration.speechMode, 5) << " ; Speech mode" << endl;
+        out << "                  ;   0 = Horizontal speed" << endl;
+        out << "                  ;   1 = Vertical speed" << endl;
+        out << "                  ;   2 = Glide ratio" << endl;
+        out << "                  ;   3 = Inverse glide ratio" << endl;
+        out << "                  ;   4 = Total speed" << endl;
+        out << "Sp_Units:   " << QString("%1").arg(configuration.speechUnits, 5) << " ; Speech units" << endl;
+        out << "                  ;   0 = km/h" << endl;
+        out << "                  ;   1 = mph" << endl;
+        out << "Sp_Rate:    " << QString("%1").arg(configuration.speechRate, 5) << " ; Speech rate (s)" << endl;
+        out << "                  ;   0 = No speech" << endl;
+        out << "Sp_Dec:     " << QString("%1").arg(configuration.speechDecimals, 5) << " ; Decimal places for speech" << endl;
+        out << "Sp_Volume:  " << QString("%1").arg(configuration.speechVolume, 5) << " ; 0 (min) to 8 (max)" << endl << endl;
 
         out << "; Thresholds" << endl << endl;
 
-        out << "V_Thresh:  " << configuration.vThreshold << "  ; Minimum vertical speed for tone (cm/s)" << endl;
-        out << "H_Thresh:  " << configuration.hThreshold << "     ; Minimum horizontal speed for tone (cm/s)" << endl << endl;
+        out << "V_Thresh:   " << QString("%1").arg(configuration.vThreshold, 5) << " ; Minimum vertical speed for tone (cm/s)" << endl;
+        out << "H_Thresh:   " << QString("%1").arg(configuration.hThreshold, 5) << " ; Minimum horizontal speed for tone (cm/s)" << endl << endl;
 
         out << "; Miscellaneous" << endl << endl;
 
-        out << "Use_SAS:   " << configuration.adjustSpeed << "     ; Use skydiver's airspeed" << endl;
-        out << "                 ;   0 = No" << endl;
-        out << "                 ;   1 = Yes" << endl;
-        out << "TZ_Offset: " << configuration.timeZoneOffset << "     ; Timezone offset of output files in seconds" << endl;
-        out << "                 ;   -14400 = UTC-4 (EDT)" << endl;
-        out << "                 ;   -18000 = UTC-5 (EST, CDT)" << endl;
-        out << "                 ;   -21600 = UTC-6 (CST, MDT)" << endl;
-        out << "                 ;   -25200 = UTC-7 (MST, PDT)" << endl;
-        out << "                 ;   -28800 = UTC-8 (PST)" << endl << endl;
+        out << "Use_SAS:    " << QString("%1").arg(configuration.adjustSpeed, 5) << " ; Use skydiver's airspeed" << endl;
+        out << "                  ;   0 = No" << endl;
+        out << "                  ;   1 = Yes" << endl;
+        out << "TZ_Offset:  " << QString("%1").arg(configuration.timeZoneOffset, 5) << " ; Timezone offset of output files in seconds" << endl;
+        out << "                  ;   -14400 = UTC-4 (EDT)" << endl;
+        out << "                  ;   -18000 = UTC-5 (EST, CDT)" << endl;
+        out << "                  ;   -21600 = UTC-6 (CST, MDT)" << endl;
+        out << "                  ;   -25200 = UTC-7 (MST, PDT)" << endl;
+        out << "                  ;   -28800 = UTC-8 (PST)" << endl << endl;
 
         out << "; Initialization" << endl << endl;
 
-        out << "Init_Mode: " << configuration.initMode << "     ; When the FlySight is powered on" << endl;
-        out << "                 ;   0 = Do nothing" << endl;
-        out << "                 ;   1 = Test speech mode" << endl;
-        out << "                 ;   2 = Play file" << endl;
-        out << "Init_File: " << configuration.initFile << "     ; File to be played" << endl << endl;
+        out << "Init_Mode:  " << QString("%1").arg(configuration.initMode, 5) << " ; When the FlySight is powered on" << endl;
+        out << "                  ;   0 = Do nothing" << endl;
+        out << "                  ;   1 = Test speech mode" << endl;
+        out << "                  ;   2 = Play file" << endl;
+        out << "Init_File:  " << configuration.initFile.rightJustified(5) << " ; File to be played" << endl << endl;
 
         out << "; Alarm settings" << endl << endl;
 
@@ -304,9 +304,9 @@ void MainWindow::on_saveAsButton_clicked()
         out << "; NOTE:    Alarm elevations are given in meters above ground" << endl;
         out << ";          elevation, which is specified in DZ_Elev." << endl << endl;
 
-        out << "Win_Above:     " << configuration.alarmWindowAbove << " ; Alarm window (m)" << endl;
-        out << "Win_Below:     " << configuration.alarmWindowBelow << " ; Alarm window (m)" << endl;
-        out << "DZ_Elev:       " << configuration.groundElevation << " ; Ground elevation (m above sea level)" << endl << endl;
+        out << "Win_Above:  " << QString("%1").arg(configuration.alarmWindowAbove, 5) << " ; Alarm window (m)" << endl;
+        out << "Win_Below:  " << QString("%1").arg(configuration.alarmWindowBelow, 5) << " ; Alarm window (m)" << endl;
+        out << "DZ_Elev:    " << QString("%1").arg(configuration.groundElevation, 5) << " ; Ground elevation (m above sea level)" << endl << endl;
 
         if (configuration.alarms.empty())
         {
@@ -355,23 +355,23 @@ void MainWindow::saveAlarm(
         const Configuration::Alarm &alarm,
         bool firstAlarm)
 {
-    out << "Alarm_Elev:    " << alarm.elevation << " ; Alarm elevation (m above ground level)" << endl;
-    out << "Alarm_Type:    " << alarm.mode << " ; Alarm type" << endl;
+    out << "Alarm_Elev: " << QString("%1").arg(alarm.elevation, 5) << " ; Alarm elevation (m above ground level)" << endl;
+    out << "Alarm_Type: " << QString("%1").arg(alarm.mode, 5) << " ; Alarm type" << endl;
     if (firstAlarm)
     {
-        out << "                 ;   0 = No alarm" << endl;
-        out << "                 ;   1 = Beep" << endl;
-        out << "                 ;   2 = Chirp up" << endl;
-        out << "                 ;   3 = Chirp down" << endl;
-        out << "                 ;   4 = Play file" << endl;
+        out << "                  ;   0 = No alarm" << endl;
+        out << "                  ;   1 = Beep" << endl;
+        out << "                  ;   2 = Chirp up" << endl;
+        out << "                  ;   3 = Chirp down" << endl;
+        out << "                  ;   4 = Play file" << endl;
     }
-    out << "Alarm_File:    " << alarm.file << " ; File to be played" << endl << endl;
+    out << "Alarm_File: " << alarm.file.rightJustified(5) << " ; File to be played" << endl << endl;
 }
 
 void MainWindow::saveWindow(
         QTextStream &out,
         const Configuration::Window window)
 {
-    out << "Win_Top:       " << window.top << " ; Silence window top (m)" << endl;
-    out << "Win_Bottom:    " << window.bottom << " ; Silence window bottom (m)" << endl << endl;
+    out << "Win_Top:    " << QString("%1").arg(window.top, 5) << " ; Silence window top (m)" << endl;
+    out << "Win_Bottom: " << QString("%1").arg(window.bottom, 5) << " ; Silence window bottom (m)" << endl << endl;
 }
