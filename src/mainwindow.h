@@ -17,8 +17,15 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+    typedef enum {
+        Metric = 0,
+        Imperial
+    } Units;
+
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+
+    Units units() const { return currentUnits; }
 
 private:
     typedef QVector< ConfigurationPage* > Pages;
@@ -27,6 +34,7 @@ private:
 
     Pages pages;
     Configuration configuration;
+    Units currentUnits;
 
     void saveAlarm(QTextStream &out, const Configuration::Alarm &alarm, bool firstAlarm);
     void saveWindow(QTextStream &out, const Configuration::Window window);
@@ -37,6 +45,8 @@ signals:
 private slots:
     void on_openButton_clicked();
     void on_saveAsButton_clicked();
+
+    void setUnits(int newUnits);
 };
 
 #endif // MAINWINDOW_H

@@ -8,6 +8,11 @@ class Configuration
 {
 public:
     typedef enum {
+        Metric = 0,
+        Imperial
+    } DisplayUnits;
+
+    typedef enum {
         Portable   = 0,
         Stationary = 2,
         Pedestrian = 3,
@@ -69,6 +74,8 @@ public:
     typedef QVector< Alarm > Alarms;
     typedef QVector< Window > Windows;
 
+    DisplayUnits displayUnits;
+
     Model model;
     int   rate;
 
@@ -107,7 +114,19 @@ public:
     Alarms alarms;
     Windows windows;
 
-    Configuration();
+    Configuration(DisplayUnits units = Metric);
+
+    QString speedUnits() const;
+
+    void vThresholdFromUnits(double valueInUnits);
+    double vThresholdToUnits() const;
+
+    void hThresholdFromUnits(double valueInUnits);
+    double hThresholdToUnits() const;
+
+private:
+    int valueFromSpeedUnits(double valueInUnits) const;
+    double valueToSpeedUnits(int value) const;
 };
 
 #endif // CONFIGURATION_H

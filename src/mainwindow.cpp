@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <QDebug>
 #include <QFile>
 #include <QFileDialog>
 #include <QHBoxLayout>
@@ -61,6 +62,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->unitsComboBox->addItem("Metric");
     ui->unitsComboBox->addItem("Imperial");
 
+    // Watch for unit changes
+    connect(ui->unitsComboBox, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(setUnits(int)));
+
     // Initial update
     emit configurationChanged(configuration);
 }
@@ -90,7 +95,8 @@ void MainWindow::on_openButton_clicked()
         // Remember last file read
         settings.setValue("folder", QFileInfo(fileName).absoluteFilePath());
 
-        configuration = Configuration();
+        // Reset configuration but keep units
+        configuration = Configuration(configuration.displayUnits);
 
         QTextStream in(&file);
         while (!in.atEnd())
@@ -405,4 +411,14 @@ void MainWindow::saveWindow(
 {
     out << "Win_Top:    " << QString("%1").arg(window.top, 5) << " ; Silence window top (m)" << endl;
     out << "Win_Bottom: " << QString("%1").arg(window.bottom, 5) << " ; Silence window bottom (m)" << endl << endl;
+}
+
+void MainWindow::setUnits(
+        int units)
+{
+    configuration.displayUnits = (Configuration::DisplayUnits) units;
+    ui->unitsComboBox->setCurrentIndex(units);
+
+    // Update configuration
+    emit configurationChanged(configuration);
 }
