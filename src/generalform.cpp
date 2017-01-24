@@ -28,9 +28,6 @@ void GeneralForm::setConfiguration(const Configuration &configuration)
 {
     ui->modelComboBox->setCurrentIndex(configuration.model);
     ui->rateSpinBox->setValue(configuration.rate);
-    ui->timezoneEdit->setText(
-                QString::number(configuration.timeZoneOffset));
-    ui->adjustedCheckBox->setChecked(configuration.adjustSpeed);
 }
 
 void GeneralForm::updateConfiguration(
@@ -38,6 +35,4 @@ void GeneralForm::updateConfiguration(
 {
     configuration.model = (Configuration::Model) ui->modelComboBox->currentIndex();
     configuration.rate = ui->rateSpinBox->value();
-    configuration.timeZoneOffset = ui->timezoneEdit->text().toInt();
-    configuration.adjustSpeed = ui->adjustedCheckBox->isChecked();
 }

@@ -34,7 +34,8 @@ SOURCES += main.cpp\
     thresholdsform.cpp \
     initializationform.cpp \
     alarmform.cpp \
-    silenceform.cpp
+    silenceform.cpp \
+    miscellaneousform.cpp
 
 HEADERS  += mainwindow.h \
     configuration.h \
@@ -46,7 +47,8 @@ HEADERS  += mainwindow.h \
     thresholdsform.h \
     initializationform.h \
     alarmform.h \
-    silenceform.h
+    silenceform.h \
+    miscellaneousform.h
 
 FORMS    += mainwindow.ui \
     generalform.ui \
@@ -56,4 +58,5 @@ FORMS    += mainwindow.ui \
     thresholdsform.ui \
     initializationform.ui \
     alarmform.ui \
-    silenceform.ui
+    silenceform.ui \
+    miscellaneousform.ui
