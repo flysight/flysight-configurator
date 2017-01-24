@@ -1,7 +1,7 @@
 #include "configuration.h"
 
-#define CMS_PER_KMH 27.77777777777778
-#define CMS_PER_MPH 44.7
+#define CMS_PER_KMH 27.778
+#define CMS_PER_MPH 44.704
 #define M_PER_FT    0.3048
 
 Configuration::Configuration(
