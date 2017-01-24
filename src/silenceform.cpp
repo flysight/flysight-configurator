@@ -63,6 +63,11 @@ void SilenceForm::updateControls()
 
 void SilenceForm::setConfiguration(const Configuration &configuration)
 {
+    ui->tableWidget->setHorizontalHeaderLabels(
+                QStringList()
+                << tr("Top (%1)").arg(configuration.distanceUnits())
+                << tr("Bottom (%1)").arg(configuration.distanceUnits()));
+
     // Remove all silence windows
     while (ui->tableWidget->rowCount() > 0)
     {
@@ -75,9 +80,11 @@ void SilenceForm::setConfiguration(const Configuration &configuration)
         int i = add();
 
         ui->tableWidget->setItem(i, 0, new QTableWidgetItem(
-                                     QString::number(window.top)));
+                                     QString::number(configuration.valueToDistanceUnits(
+                                                         window.top))));
         ui->tableWidget->setItem(i, 1, new QTableWidgetItem(
-                                     QString::number(window.bottom)));
+                                     QString::number(configuration.valueToDistanceUnits(
+                                                         window.bottom))));
     }
 }
 
@@ -92,8 +99,10 @@ void SilenceForm::updateConfiguration(
     {
         Configuration::Window window;
 
-        window.top = ui->tableWidget->item(i, 0)->text().toInt();
-        window.bottom = ui->tableWidget->item(i, 1)->text().toInt();
+        window.top = configuration.valueFromDistanceUnits(
+                    ui->tableWidget->item(i, 0)->text().toDouble());
+        window.bottom = configuration.valueFromDistanceUnits(
+                    ui->tableWidget->item(i, 1)->text().toDouble());
 
         configuration.windows.push_back(window);
     }

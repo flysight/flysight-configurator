@@ -80,16 +80,16 @@ void AlarmForm::setConfiguration(const Configuration &configuration)
     ui->groundElevationLabel->setText(
                 tr("Ground elevation (%1):").arg(configuration.distanceUnits()));
 
-    ui->tableWidget->setHorizontalHeaderLabels(
-                QStringList() << tr("Elevation (%1)").arg(configuration.distanceUnits())
-                << tr("Type") << tr("Filename"));
-
     ui->windowAboveEdit->setText(
                 QString::number(configuration.alarmWindowAboveToUnits()));
     ui->windowBelowEdit->setText(
                 QString::number(configuration.alarmWindowBelowToUnits()));
     ui->groundElevationEdit->setText(
                 QString::number(configuration.groundElevationToUnits()));
+
+    ui->tableWidget->setHorizontalHeaderLabels(
+                QStringList() << tr("Elevation (%1)").arg(configuration.distanceUnits())
+                << tr("Type") << tr("Filename"));
 
     // Remove all alarms
     while (ui->tableWidget->rowCount() > 0)
