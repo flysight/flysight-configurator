@@ -57,6 +57,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->listWidget, SIGNAL(currentRowChanged(int)),
             ui->stackedWidget, SLOT(setCurrentIndex(int)));
 
+    // Initialize units list
+    ui->unitsComboBox->addItem("Metric");
+    ui->unitsComboBox->addItem("Imperial");
+
     // Initial update
     emit configurationChanged(configuration);
 }
