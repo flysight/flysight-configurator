@@ -33,7 +33,7 @@
    <item>
     <layout class="QGridLayout" name="gridLayout">
      <item row="0" column="0">
-      <widget class="QLabel" name="label_2">
+      <widget class="QLabel" name="windowAboveLabel">
        <property name="text">
         <string>Window above:</string>
        </property>
@@ -43,14 +43,14 @@
       <widget class="QLineEdit" name="windowBelowEdit"/>
      </item>
      <item row="2" column="0">
-      <widget class="QLabel" name="label_4">
+      <widget class="QLabel" name="groundElevationLabel">
        <property name="text">
         <string>Ground elevation:</string>
        </property>
       </widget>
      </item>
      <item row="1" column="0">
-      <widget class="QLabel" name="label_3">
+      <widget class="QLabel" name="windowBelowLabel">
        <property name="text">
         <string>Window below:</string>
        </property>

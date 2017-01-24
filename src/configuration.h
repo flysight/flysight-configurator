@@ -117,6 +117,7 @@ public:
     Configuration(DisplayUnits units = Metric);
 
     QString speedUnits() const;
+    QString distanceUnits() const;
 
     void vThresholdFromUnits(double valueInUnits);
     double vThresholdToUnits() const;
@@ -124,9 +125,20 @@ public:
     void hThresholdFromUnits(double valueInUnits);
     double hThresholdToUnits() const;
 
-private:
+    void alarmWindowAboveFromUnits(double valueInUnits);
+    double alarmWindowAboveToUnits() const;
+
+    void alarmWindowBelowFromUnits(double valueInUnits);
+    double alarmWindowBelowToUnits() const;
+
+    void groundElevationFromUnits(double valueInUnits);
+    double groundElevationToUnits() const;
+
     int valueFromSpeedUnits(double valueInUnits) const;
     double valueToSpeedUnits(int value) const;
+
+    int valueFromDistanceUnits(double valueInUnits) const;
+    double valueToDistanceUnits(int value) const;
 };
 
 #endif // CONFIGURATION_H

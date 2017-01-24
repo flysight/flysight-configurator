@@ -2,6 +2,7 @@
 
 #define CMS_PER_KMH 27.77777777777778
 #define CMS_PER_MPH 44.7
+#define M_PER_FT    0.3048
 
 Configuration::Configuration(
         DisplayUnits units)
@@ -57,6 +58,16 @@ QString Configuration::speedUnits() const
     return "";
 }
 
+QString Configuration::distanceUnits() const
+{
+    switch (displayUnits)
+    {
+    case Metric: return "m";
+    case Imperial: return "ft";
+    }
+    return "";
+}
+
 void Configuration::vThresholdFromUnits(
         double valueInUnits)
 {
@@ -79,6 +90,39 @@ double Configuration::hThresholdToUnits() const
     return valueToSpeedUnits(hThreshold);
 }
 
+void Configuration::alarmWindowAboveFromUnits(
+        double valueInUnits)
+{
+    alarmWindowAbove = valueFromDistanceUnits(valueInUnits);
+}
+
+double Configuration::alarmWindowAboveToUnits() const
+{
+    return valueToDistanceUnits(alarmWindowAbove);
+}
+
+double Configuration::alarmWindowBelowToUnits() const
+{
+    return valueToDistanceUnits(alarmWindowBelow);
+}
+
+void Configuration::alarmWindowBelowFromUnits(
+        double valueInUnits)
+{
+    alarmWindowBelow = valueFromDistanceUnits(valueInUnits);
+}
+
+double Configuration::groundElevationToUnits() const
+{
+    return valueToDistanceUnits(groundElevation);
+}
+
+void Configuration::groundElevationFromUnits(
+        double valueInUnits)
+{
+    groundElevation = valueFromDistanceUnits(valueInUnits);
+}
+
 int Configuration::valueFromSpeedUnits(
         double valueInUnits) const
 {
@@ -97,6 +141,28 @@ double Configuration::valueToSpeedUnits(
     {
     case Metric: return value / CMS_PER_KMH;
     case Imperial: return value / CMS_PER_MPH;
+    }
+    return 0;
+}
+
+int Configuration::valueFromDistanceUnits(
+        double valueInUnits) const
+{
+    switch (displayUnits)
+    {
+    case Metric: return valueInUnits;
+    case Imperial: return valueInUnits * M_PER_FT;
+    }
+    return 0;
+}
+
+double Configuration::valueToDistanceUnits(
+        int value) const
+{
+    switch (displayUnits)
+    {
+    case Metric: return value;
+    case Imperial: return value / M_PER_FT;
     }
     return 0;
 }

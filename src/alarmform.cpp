@@ -73,12 +73,23 @@ void AlarmForm::updateControls()
 
 void AlarmForm::setConfiguration(const Configuration &configuration)
 {
+    ui->windowAboveLabel->setText(
+                tr("Window above (%1):").arg(configuration.distanceUnits()));
+    ui->windowBelowLabel->setText(
+                tr("Window below (%1):").arg(configuration.distanceUnits()));
+    ui->groundElevationLabel->setText(
+                tr("Ground elevation (%1):").arg(configuration.distanceUnits()));
+
+    ui->tableWidget->setHorizontalHeaderLabels(
+                QStringList() << tr("Elevation (%1)").arg(configuration.distanceUnits())
+                << tr("Type") << tr("Filename"));
+
     ui->windowAboveEdit->setText(
-                QString::number(configuration.alarmWindowAbove));
+                QString::number(configuration.alarmWindowAboveToUnits()));
     ui->windowBelowEdit->setText(
-                QString::number(configuration.alarmWindowBelow));
+                QString::number(configuration.alarmWindowBelowToUnits()));
     ui->groundElevationEdit->setText(
-                QString::number(configuration.groundElevation));
+                QString::number(configuration.groundElevationToUnits()));
 
     // Remove all alarms
     while (ui->tableWidget->rowCount() > 0)
@@ -92,7 +103,8 @@ void AlarmForm::setConfiguration(const Configuration &configuration)
         int i = add();
 
         ui->tableWidget->setItem(i, 0, new QTableWidgetItem(
-                                     QString::number(alarm.elevation)));
+                                     QString::number(configuration.valueToDistanceUnits(
+                                                         alarm.elevation))));
         ui->tableWidget->setItem(i, 2, new QTableWidgetItem(
                                      alarm.file));
 
@@ -104,9 +116,9 @@ void AlarmForm::setConfiguration(const Configuration &configuration)
 void AlarmForm::updateConfiguration(
         Configuration &configuration)
 {
-    configuration.alarmWindowAbove = ui->windowAboveEdit->text().toInt();
-    configuration.alarmWindowBelow = ui->windowBelowEdit->text().toInt();
-    configuration.groundElevation = ui->groundElevationEdit->text().toInt();
+    configuration.alarmWindowAboveFromUnits(ui->windowAboveEdit->text().toDouble());
+    configuration.alarmWindowBelowFromUnits(ui->windowBelowEdit->text().toDouble());
+    configuration.groundElevationFromUnits(ui->groundElevationEdit->text().toDouble());
 
     // Clear alarms in configuration
     configuration.alarms.clear();
@@ -116,7 +128,8 @@ void AlarmForm::updateConfiguration(
     {
         Configuration::Alarm alarm;
 
-        alarm.elevation = ui->tableWidget->item(i, 0)->text().toInt();
+        alarm.elevation = configuration.valueFromDistanceUnits(
+                    ui->tableWidget->item(i, 0)->text().toDouble());
         alarm.file = ui->tableWidget->item(i, 2)->text();
 
         QComboBox *combo = (QComboBox*) ui->tableWidget->cellWidget(i, 1);
