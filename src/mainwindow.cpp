@@ -6,6 +6,7 @@
 #include <QHBoxLayout>
 #include <QListWidget>
 #include <QMessageBox>
+#include <QSettings>
 #include <QStackedWidget>
 #include <QTextStream>
 
@@ -65,10 +66,13 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_openButton_clicked()
 {
+    // Initialize settings object
+    QSettings settings("FlySight", "Configurator");
+
     QString fileName = QFileDialog::getOpenFileName(
                 this,
                 tr("Open"),
-                QString(),
+                settings.value("folder").toString(),
                 tr("Configuration files (*.txt)"));
 
     // Return now if user canceled
@@ -77,6 +81,9 @@ void MainWindow::on_openButton_clicked()
     QFile file(fileName);
     if (file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
+        // Remember last file read
+        settings.setValue("folder", QFileInfo(fileName).absoluteFilePath());
+
         configuration = Configuration();
 
         QTextStream in(&file);
@@ -182,10 +189,13 @@ void MainWindow::on_openButton_clicked()
 
 void MainWindow::on_saveAsButton_clicked()
 {
+    // Initialize settings object
+    QSettings settings("FlySight", "Configurator");
+
     QString fileName = QFileDialog::getSaveFileName(
                 this,
                 tr("Save As"),
-                QString(),
+                settings.value("folder").toString(),
                 tr("Configuration files (*.txt)"));
 
     // Return now if user canceled
@@ -194,6 +204,9 @@ void MainWindow::on_saveAsButton_clicked()
     QFile file(fileName);
     if (file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
+        // Remember last file read
+        settings.setValue("folder", QFileInfo(fileName).absoluteFilePath());
+
         foreach(ConfigurationPage *page, pages)
         {
             page->updateConfiguration(configuration);
