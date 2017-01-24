@@ -71,6 +71,9 @@ void MainWindow::on_openButton_clicked()
                 QString(),
                 tr("Configuration files (*.txt)"));
 
+    // Return now if user canceled
+    if (fileName.isEmpty()) return;
+
     QFile file(fileName);
     if (file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
@@ -184,6 +187,9 @@ void MainWindow::on_saveAsButton_clicked()
                 tr("Save As"),
                 QString(),
                 tr("Configuration files (*.txt)"));
+
+    // Return now if user canceled
+    if (fileName.isEmpty()) return;
 
     QFile file(fileName);
     if (file.open(QIODevice::WriteOnly | QIODevice::Text))
