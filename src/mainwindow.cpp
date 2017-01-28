@@ -219,6 +219,7 @@ void MainWindow::on_saveAsButton_clicked()
         // Remember last file read
         settings.setValue("folder", QFileInfo(fileName).absoluteFilePath());
 
+        // Update configuration
         foreach(ConfigurationPage *page, pages)
         {
             page->updateConfiguration(configuration);
@@ -416,9 +417,19 @@ void MainWindow::saveWindow(
 void MainWindow::setUnits(
         int units)
 {
+    if (configuration.displayUnits == (Configuration::DisplayUnits) units)
+        return;
+
+    // Update configuration from pages
+    foreach(ConfigurationPage *page, pages)
+    {
+        page->updateConfiguration(configuration);
+    }
+
+    // UPdate display units
     configuration.displayUnits = (Configuration::DisplayUnits) units;
     ui->unitsComboBox->setCurrentIndex(units);
 
-    // Update configuration
+    // Update pages from configuration
     emit configurationChanged(configuration);
 }
