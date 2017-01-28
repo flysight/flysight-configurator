@@ -16,6 +16,9 @@ RateForm::RateForm(QWidget *parent) :
     ui->modeComboBox->addItem("Total speed");
     ui->modeComboBox->addItem("Magnitude of tone value");
     ui->modeComboBox->addItem("Change in tone value");
+
+    connect(ui->modeComboBox, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(updateText()));
 }
 
 RateForm::~RateForm()
@@ -44,6 +47,8 @@ void RateForm::setConfiguration(const Configuration &configuration)
     ui->maximumEdit->setText(
                 QString::number(configuration.maxRate / 100.));
     ui->flatlineCheckBox->setChecked(configuration.flatline);
+
+    updateText();
 }
 
 void RateForm::updateConfiguration(
@@ -58,4 +63,40 @@ void RateForm::updateConfiguration(
     configuration.minRate = ui->minimumEdit->text().toDouble() * 100;
     configuration.maxRate = ui->maximumEdit->text().toDouble() * 100;
     configuration.flatline = ui->flatlineCheckBox->isChecked();
+}
+
+void RateForm::updateText()
+{
+    Configuration::Mode mode;
+
+    int i = ui->modeComboBox->currentIndex();
+    if (i <= 4) mode = (Configuration::Mode) i;
+    else        mode = (Configuration::Mode) (i + 3);
+
+    switch((Configuration::Mode) mode)
+    {
+    case Configuration::HorizontalSpeed:
+    case Configuration::VerticalSpeed:
+    case Configuration::TotalSpeed:
+        ui->minimumLabel->setText(tr("Minimum speed:"));
+        ui->maximumLabel->setText(tr("Maximum speed:"));
+        break;
+    case Configuration::GlideRatio:
+    case Configuration::InverseGlideRatio:
+        ui->minimumLabel->setText(tr("Minimum glide ratio:"));
+        ui->maximumLabel->setText(tr("Maximum glide ratio:"));
+        break;
+    case Configuration::ValueMagnitude:
+        ui->minimumLabel->setText(tr("Minimum magnitude:"));
+        ui->maximumLabel->setText(tr("Maximum magnitude:"));
+        break;
+    case Configuration::ValueChange:
+        ui->minimumLabel->setText(tr("Minimum change:"));
+        ui->maximumLabel->setText(tr("Maximum change:"));
+        break;
+    default:
+        ui->minimumLabel->setText(tr("Minimum:"));
+        ui->maximumLabel->setText(tr("Maximum:"));
+        break;
+    }
 }

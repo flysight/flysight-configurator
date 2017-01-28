@@ -25,6 +25,7 @@ private:
 
 public slots:
     void setConfiguration(const Configuration &configuration);
+    void updateText();
 };
 
 #endif // RATEFORM_H
