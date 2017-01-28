@@ -19,6 +19,11 @@ ToneForm::ToneForm(QWidget *parent) :
     ui->limitComboBox->addItem("Min/max tone");
     ui->limitComboBox->addItem("Chirp up/down");
     ui->limitComboBox->addItem("Chrip down/up");
+
+    for (int i = 0; i <= 8; ++i)
+    {
+        ui->volumeComboBox->addItem(QString("%1%").arg(i / 8. * 100));
+    }
 }
 
 ToneForm::~ToneForm()
@@ -34,7 +39,7 @@ void ToneForm::setConfiguration(const Configuration &configuration)
     ui->maximumEdit->setText(
                 QString::number(configuration.maxTone));
     ui->limitComboBox->setCurrentIndex(configuration.limits);
-    ui->volumeSpinBox->setValue(configuration.toneVolume);
+    ui->volumeComboBox->setCurrentIndex(configuration.toneVolume);
 }
 
 void ToneForm::updateConfiguration(
@@ -44,5 +49,5 @@ void ToneForm::updateConfiguration(
     configuration.minTone = ui->minimumEdit->text().toInt();
     configuration.maxTone = ui->maximumEdit->text().toInt();
     configuration.limits = (Configuration::Limits) ui->limitComboBox->currentIndex();
-    configuration.toneVolume = ui->volumeSpinBox->value();
+    configuration.toneVolume = ui->volumeComboBox->currentIndex();
 }

@@ -17,6 +17,11 @@ SpeechForm::SpeechForm(QWidget *parent) :
 
     ui->unitsComboBox->addItem("km/h");
     ui->unitsComboBox->addItem("mph");
+
+    for (int i = 0; i <= 8; ++i)
+    {
+        ui->volumeComboBox->addItem(QString("%1%").arg(i / 8. * 100));
+    }
 }
 
 SpeechForm::~SpeechForm()
@@ -31,7 +36,7 @@ void SpeechForm::setConfiguration(const Configuration &configuration)
     ui->rateEdit->setText(
                 QString::number(configuration.speechRate));
     ui->decimalsSpinBox->setValue(configuration.speechDecimals);
-    ui->volumeSpinBox->setValue(configuration.speechVolume);
+    ui->volumeComboBox->setCurrentIndex(configuration.speechVolume);
 }
 
 void SpeechForm::updateConfiguration(
@@ -41,5 +46,5 @@ void SpeechForm::updateConfiguration(
     configuration.speechUnits = (Configuration::Units) ui->unitsComboBox->currentIndex();
     configuration.speechRate = ui->rateEdit->text().toInt();
     configuration.speechDecimals = ui->decimalsSpinBox->value();
-    configuration.speechVolume = ui->volumeSpinBox->value();
+    configuration.speechVolume = ui->volumeComboBox->currentIndex();
 }
