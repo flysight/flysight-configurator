@@ -23,6 +23,7 @@ private:
 
 public slots:
     void setConfiguration(const Configuration &configuration);
+    void updateText();
 };
 
 #endif // TONEFORM_H

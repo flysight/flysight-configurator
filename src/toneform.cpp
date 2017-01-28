@@ -24,6 +24,9 @@ ToneForm::ToneForm(QWidget *parent) :
     {
         ui->volumeComboBox->addItem(QString("%1%").arg(i / 8. * 100));
     }
+
+    connect(ui->modeComboBox, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(updateText()));
 }
 
 ToneForm::~ToneForm()
@@ -40,6 +43,8 @@ void ToneForm::setConfiguration(const Configuration &configuration)
                 QString::number(configuration.maxTone));
     ui->limitComboBox->setCurrentIndex(configuration.limits);
     ui->volumeComboBox->setCurrentIndex(configuration.toneVolume);
+
+    updateText();
 }
 
 void ToneForm::updateConfiguration(
@@ -50,4 +55,29 @@ void ToneForm::updateConfiguration(
     configuration.maxTone = ui->maximumEdit->text().toInt();
     configuration.limits = (Configuration::Limits) ui->limitComboBox->currentIndex();
     configuration.toneVolume = ui->volumeComboBox->currentIndex();
+}
+
+void ToneForm::updateText()
+{
+    Configuration::Mode mode
+            = (Configuration::Mode) ui->modeComboBox->currentIndex();
+
+    switch((Configuration::Mode) mode)
+    {
+    case Configuration::HorizontalSpeed:
+    case Configuration::VerticalSpeed:
+    case Configuration::TotalSpeed:
+        ui->minimumLabel->setText(tr("Minimum speed:"));
+        ui->maximumLabel->setText(tr("Maximum speed:"));
+        break;
+    case Configuration::GlideRatio:
+    case Configuration::InverseGlideRatio:
+        ui->minimumLabel->setText(tr("Minimum glide ratio:"));
+        ui->maximumLabel->setText(tr("Maximum glide ratio:"));
+        break;
+    default:
+        ui->minimumLabel->setText(tr("Minimum:"));
+        ui->maximumLabel->setText(tr("Maximum:"));
+        break;
+    }
 }

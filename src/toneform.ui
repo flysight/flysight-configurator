@@ -27,7 +27,7 @@
       <widget class="QComboBox" name="modeComboBox"/>
      </item>
      <item row="1" column="0">
-      <widget class="QLabel" name="label_2">
+      <widget class="QLabel" name="minimumLabel">
        <property name="text">
         <string>Minimum:</string>
        </property>
@@ -41,7 +41,7 @@
       </widget>
      </item>
      <item row="2" column="0">
-      <widget class="QLabel" name="label_3">
+      <widget class="QLabel" name="maximumLabel">
        <property name="text">
         <string>Maximum:</string>
        </property>
