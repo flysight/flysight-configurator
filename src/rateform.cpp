@@ -40,9 +40,9 @@ void RateForm::setConfiguration(const Configuration &configuration)
     ui->maximumValueEdit->setText(
                 QString::number(configuration.maxRateValue));
     ui->minimumEdit->setText(
-                QString::number(configuration.minRate));
+                QString::number(configuration.minRate / 100.));
     ui->maximumEdit->setText(
-                QString::number(configuration.maxRate));
+                QString::number(configuration.maxRate / 100.));
     ui->flatlineCheckBox->setChecked(configuration.flatline);
 }
 
@@ -55,7 +55,7 @@ void RateForm::updateConfiguration(
 
     configuration.minRateValue = ui->minimumValueEdit->text().toInt();
     configuration.maxRateValue = ui->maximumValueEdit->text().toInt();
-    configuration.minRate = ui->minimumEdit->text().toInt();
-    configuration.maxRate = ui->maximumEdit->text().toInt();
+    configuration.minRate = ui->minimumEdit->text().toDouble() * 100;
+    configuration.maxRate = ui->maximumEdit->text().toDouble() * 100;
     configuration.flatline = ui->flatlineCheckBox->isChecked();
 }

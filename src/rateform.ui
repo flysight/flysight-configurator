@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>150</width>
-    <height>207</height>
+    <width>194</width>
+    <height>204</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -63,7 +63,7 @@
      <item row="3" column="0">
       <widget class="QLabel" name="label_7">
        <property name="text">
-        <string>Minimum rate:</string>
+        <string>Minimum rate (tones per s):</string>
        </property>
       </widget>
      </item>
@@ -80,7 +80,7 @@
      <item row="4" column="0">
       <widget class="QLabel" name="label_6">
        <property name="text">
-        <string>Maximum rate:</string>
+        <string>Maximum rate (tones per s):</string>
        </property>
       </widget>
      </item>
