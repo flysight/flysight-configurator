@@ -18,7 +18,7 @@ RateForm::RateForm(QWidget *parent) :
     ui->modeComboBox->addItem("Change in tone value");
 
     connect(ui->modeComboBox, SIGNAL(currentIndexChanged(int)),
-            this, SLOT(updateText()));
+            this, SIGNAL(selectionChanged()));
 }
 
 RateForm::~RateForm()
@@ -48,27 +48,7 @@ void RateForm::setConfiguration(const Configuration &configuration)
                 QString::number(configuration.maxRate / 100.));
     ui->flatlineCheckBox->setChecked(configuration.flatline);
 
-    updateText();
-}
-
-void RateForm::updateConfiguration(
-        Configuration &configuration)
-{
-    int i = ui->modeComboBox->currentIndex();
-    if (i <= 4) configuration.rateMode = (Configuration::Mode) i;
-    else        configuration.rateMode = (Configuration::Mode) (i + 3);
-
-    configuration.minRateValue = ui->minimumValueEdit->text().toInt();
-    configuration.maxRateValue = ui->maximumValueEdit->text().toInt();
-    configuration.minRate = ui->minimumEdit->text().toDouble() * 100;
-    configuration.maxRate = ui->maximumEdit->text().toDouble() * 100;
-    configuration.flatline = ui->flatlineCheckBox->isChecked();
-}
-
-void RateForm::updateText()
-{
     Configuration::Mode mode;
-
     int i = ui->modeComboBox->currentIndex();
     if (i <= 4) mode = (Configuration::Mode) i;
     else        mode = (Configuration::Mode) (i + 3);
@@ -99,4 +79,18 @@ void RateForm::updateText()
         ui->maximumLabel->setText(tr("Maximum:"));
         break;
     }
+}
+
+void RateForm::updateConfiguration(
+        Configuration &configuration)
+{
+    int i = ui->modeComboBox->currentIndex();
+    if (i <= 4) configuration.rateMode = (Configuration::Mode) i;
+    else        configuration.rateMode = (Configuration::Mode) (i + 3);
+
+    configuration.minRateValue = ui->minimumValueEdit->text().toInt();
+    configuration.maxRateValue = ui->maximumValueEdit->text().toInt();
+    configuration.minRate = ui->minimumEdit->text().toDouble() * 100;
+    configuration.maxRate = ui->maximumEdit->text().toDouble() * 100;
+    configuration.flatline = ui->flatlineCheckBox->isChecked();
 }

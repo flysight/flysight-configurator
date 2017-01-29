@@ -26,7 +26,7 @@ ToneForm::ToneForm(QWidget *parent) :
     }
 
     connect(ui->modeComboBox, SIGNAL(currentIndexChanged(int)),
-            this, SLOT(updateText()));
+            this, SIGNAL(selectionChanged()));
 }
 
 ToneForm::~ToneForm()
@@ -44,21 +44,6 @@ void ToneForm::setConfiguration(const Configuration &configuration)
     ui->limitComboBox->setCurrentIndex(configuration.limits);
     ui->volumeComboBox->setCurrentIndex(configuration.toneVolume);
 
-    updateText();
-}
-
-void ToneForm::updateConfiguration(
-        Configuration &configuration)
-{
-    configuration.toneMode = (Configuration::Mode) ui->modeComboBox->currentIndex();
-    configuration.minTone = ui->minimumEdit->text().toInt();
-    configuration.maxTone = ui->maximumEdit->text().toInt();
-    configuration.limits = (Configuration::Limits) ui->limitComboBox->currentIndex();
-    configuration.toneVolume = ui->volumeComboBox->currentIndex();
-}
-
-void ToneForm::updateText()
-{
     Configuration::Mode mode
             = (Configuration::Mode) ui->modeComboBox->currentIndex();
 
@@ -80,4 +65,14 @@ void ToneForm::updateText()
         ui->maximumLabel->setText(tr("Maximum:"));
         break;
     }
+}
+
+void ToneForm::updateConfiguration(
+        Configuration &configuration)
+{
+    configuration.toneMode = (Configuration::Mode) ui->modeComboBox->currentIndex();
+    configuration.minTone = ui->minimumEdit->text().toInt();
+    configuration.maxTone = ui->maximumEdit->text().toInt();
+    configuration.limits = (Configuration::Limits) ui->limitComboBox->currentIndex();
+    configuration.toneVolume = ui->volumeComboBox->currentIndex();
 }

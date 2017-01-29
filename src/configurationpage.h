@@ -16,6 +16,7 @@ public:
     virtual void updateConfiguration(Configuration &configuration);
 
 signals:
+    void selectionChanged();
 
 public slots:
 };

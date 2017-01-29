@@ -47,6 +47,7 @@ private slots:
     void on_saveAsButton_clicked();
 
     void setUnits(int newUnits);
+    void updateAllPages();
 };
 
 #endif // MAINWINDOW_H

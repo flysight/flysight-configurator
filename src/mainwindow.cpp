@@ -47,8 +47,11 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         ui->listWidget->addItem(page->title());
         ui->stackedWidget->addWidget(page);
+
         connect(this, SIGNAL(configurationChanged(Configuration)),
                 page, SLOT(setConfiguration(Configuration)));
+        connect(page, SIGNAL(selectionChanged()),
+                this, SLOT(updateAllPages()));
     }
 
     ui->listWidget->setCurrentRow(0);
@@ -426,9 +429,21 @@ void MainWindow::setUnits(
         page->updateConfiguration(configuration);
     }
 
-    // UPdate display units
+    // Update display units
     configuration.displayUnits = (Configuration::DisplayUnits) units;
     ui->unitsComboBox->setCurrentIndex(units);
+
+    // Update pages from configuration
+    emit configurationChanged(configuration);
+}
+
+void MainWindow::updateAllPages()
+{
+    // Update configuration from pages
+    foreach(ConfigurationPage *page, pages)
+    {
+        page->updateConfiguration(configuration);
+    }
 
     // Update pages from configuration
     emit configurationChanged(configuration);
