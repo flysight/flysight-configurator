@@ -139,6 +139,15 @@ public:
 
     int valueFromDistanceUnits(double valueInUnits) const;
     double valueToDistanceUnits(int value) const;
+
+    double minToneToUnits() const;
+    void minToneFromUnits(double valueInUnits);
+
+    double maxToneToUnits() const;
+    void maxToneFromUnits(double valueInUnits);
+
+    double toneToUnits(int value) const;
+    int toneFromUnits(double valueInUnits) const;
 };
 
 #endif // CONFIGURATION_H

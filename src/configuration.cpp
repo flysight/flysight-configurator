@@ -166,3 +166,59 @@ double Configuration::valueToDistanceUnits(
     }
     return 0;
 }
+
+double Configuration::minToneToUnits() const
+{
+    return toneToUnits(minTone);
+}
+
+void Configuration::minToneFromUnits(
+        double valueInUnits)
+{
+    minTone = toneFromUnits(valueInUnits);
+}
+
+double Configuration::maxToneToUnits() const
+{
+    return toneToUnits(maxTone);
+}
+
+void Configuration::maxToneFromUnits(
+        double valueInUnits)
+{
+    maxTone = toneFromUnits(valueInUnits);
+}
+
+double Configuration::toneToUnits(
+        int value) const
+{
+    switch(toneMode)
+    {
+    case Configuration::HorizontalSpeed:
+    case Configuration::VerticalSpeed:
+    case Configuration::TotalSpeed:
+        return valueToSpeedUnits(value);
+    case Configuration::GlideRatio:
+    case Configuration::InverseGlideRatio:
+        return value / 100.;
+    default:
+        return value;
+    }
+}
+
+int Configuration::toneFromUnits(
+        double valueInUnits) const
+{
+    switch(toneMode)
+    {
+    case Configuration::HorizontalSpeed:
+    case Configuration::VerticalSpeed:
+    case Configuration::TotalSpeed:
+        return valueFromSpeedUnits(valueInUnits);
+    case Configuration::GlideRatio:
+    case Configuration::InverseGlideRatio:
+        return valueInUnits * 100;
+    default:
+        return valueInUnits;
+    }
+}

@@ -53,13 +53,14 @@ void RateForm::setConfiguration(const Configuration &configuration)
     if (i <= 4) mode = (Configuration::Mode) i;
     else        mode = (Configuration::Mode) (i + 3);
 
+    QString unitText;
     switch((Configuration::Mode) mode)
     {
     case Configuration::HorizontalSpeed:
     case Configuration::VerticalSpeed:
     case Configuration::TotalSpeed:
-        ui->minimumLabel->setText(tr("Minimum speed:"));
-        ui->maximumLabel->setText(tr("Maximum speed:"));
+        ui->minimumLabel->setText(tr("Minimum speed (%1):").arg(configuration.speedUnits()));
+        ui->maximumLabel->setText(tr("Maximum speed (%1):").arg(configuration.speedUnits()));
         break;
     case Configuration::GlideRatio:
     case Configuration::InverseGlideRatio:
@@ -67,12 +68,31 @@ void RateForm::setConfiguration(const Configuration &configuration)
         ui->maximumLabel->setText(tr("Maximum glide ratio:"));
         break;
     case Configuration::ValueMagnitude:
-        ui->minimumLabel->setText(tr("Minimum magnitude:"));
-        ui->maximumLabel->setText(tr("Maximum magnitude:"));
+        switch (configuration.toneMode)
+        {
+        case Configuration::HorizontalSpeed:
+        case Configuration::VerticalSpeed:
+        case Configuration::TotalSpeed:
+            unitText = configuration.speedUnits();
+            break;
+        default:
+            break;
+        }
+
+        if (unitText.isEmpty())
+        {
+            ui->minimumLabel->setText(tr("Minimum magnitude:"));
+            ui->maximumLabel->setText(tr("Maximum magnitude:"));
+        }
+        else
+        {
+            ui->minimumLabel->setText(tr("Minimum magnitude (%1):").arg(unitText));
+            ui->maximumLabel->setText(tr("Maximum magnitude (%1):").arg(unitText));
+        }
         break;
     case Configuration::ValueChange:
-        ui->minimumLabel->setText(tr("Minimum change:"));
-        ui->maximumLabel->setText(tr("Maximum change:"));
+        ui->minimumLabel->setText(tr("Minimum change (percent):"));
+        ui->maximumLabel->setText(tr("Maximum change (percent):"));
         break;
     default:
         ui->minimumLabel->setText(tr("Minimum:"));

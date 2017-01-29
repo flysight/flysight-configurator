@@ -38,22 +38,22 @@ void ToneForm::setConfiguration(const Configuration &configuration)
 {
     ui->modeComboBox->setCurrentIndex(configuration.toneMode);
     ui->minimumEdit->setText(
-                QString::number(configuration.minTone));
+                QString::number(configuration.minToneToUnits()));
     ui->maximumEdit->setText(
-                QString::number(configuration.maxTone));
+                QString::number(configuration.maxToneToUnits()));
     ui->limitComboBox->setCurrentIndex(configuration.limits);
     ui->volumeComboBox->setCurrentIndex(configuration.toneVolume);
 
     Configuration::Mode mode
             = (Configuration::Mode) ui->modeComboBox->currentIndex();
 
-    switch((Configuration::Mode) mode)
+    switch ((Configuration::Mode) mode)
     {
     case Configuration::HorizontalSpeed:
     case Configuration::VerticalSpeed:
     case Configuration::TotalSpeed:
-        ui->minimumLabel->setText(tr("Minimum speed:"));
-        ui->maximumLabel->setText(tr("Maximum speed:"));
+        ui->minimumLabel->setText(tr("Minimum speed (%1):").arg(configuration.speedUnits()));
+        ui->maximumLabel->setText(tr("Maximum speed (%1):").arg(configuration.speedUnits()));
         break;
     case Configuration::GlideRatio:
     case Configuration::InverseGlideRatio:
@@ -71,8 +71,8 @@ void ToneForm::updateConfiguration(
         Configuration &configuration)
 {
     configuration.toneMode = (Configuration::Mode) ui->modeComboBox->currentIndex();
-    configuration.minTone = ui->minimumEdit->text().toInt();
-    configuration.maxTone = ui->maximumEdit->text().toInt();
+    configuration.minToneFromUnits(ui->minimumEdit->text().toDouble());
+    configuration.maxToneFromUnits(ui->maximumEdit->text().toDouble());
     configuration.limits = (Configuration::Limits) ui->limitComboBox->currentIndex();
     configuration.toneVolume = ui->volumeComboBox->currentIndex();
 }
