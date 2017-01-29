@@ -116,9 +116,21 @@ void AlarmForm::setConfiguration(const Configuration &configuration)
 void AlarmForm::updateConfiguration(
         Configuration &configuration)
 {
-    configuration.alarmWindowAboveFromUnits(ui->windowAboveEdit->text().toDouble());
-    configuration.alarmWindowBelowFromUnits(ui->windowBelowEdit->text().toDouble());
-    configuration.groundElevationFromUnits(ui->groundElevationEdit->text().toDouble());
+    if (ui->windowAboveEdit->text()
+            != QString::number(configuration.alarmWindowAboveToUnits()))
+    {
+        configuration.alarmWindowAboveFromUnits(ui->windowAboveEdit->text().toDouble());
+    }
+    if (ui->windowBelowEdit->text()
+            != QString::number(configuration.alarmWindowBelowToUnits()))
+    {
+        configuration.alarmWindowBelowFromUnits(ui->windowBelowEdit->text().toDouble());
+    }
+    if (ui->groundElevationEdit->text()
+            != QString::number(configuration.groundElevationToUnits()))
+    {
+        configuration.groundElevationFromUnits(ui->groundElevationEdit->text().toDouble());
+    }
 
     // Clear alarms in configuration
     configuration.alarms.clear();
@@ -128,8 +140,13 @@ void AlarmForm::updateConfiguration(
     {
         Configuration::Alarm alarm;
 
-        alarm.elevation = configuration.valueFromDistanceUnits(
-                    ui->tableWidget->item(i, 0)->text().toDouble());
+        if (ui->tableWidget->item(i, 0)->text()
+                != QString::number(configuration.valueToDistanceUnits(
+                                       alarm.elevation)))
+        {
+            alarm.elevation = configuration.valueFromDistanceUnits(
+                        ui->tableWidget->item(i, 0)->text().toDouble());
+        }
         alarm.file = ui->tableWidget->item(i, 2)->text();
 
         QComboBox *combo = (QComboBox*) ui->tableWidget->cellWidget(i, 1);

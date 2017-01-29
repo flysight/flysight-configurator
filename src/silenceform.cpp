@@ -99,10 +99,20 @@ void SilenceForm::updateConfiguration(
     {
         Configuration::Window window;
 
-        window.top = configuration.valueFromDistanceUnits(
-                    ui->tableWidget->item(i, 0)->text().toDouble());
-        window.bottom = configuration.valueFromDistanceUnits(
-                    ui->tableWidget->item(i, 1)->text().toDouble());
+        if (ui->tableWidget->item(i, 0)->text()
+                != QString::number(configuration.valueToDistanceUnits(
+                                       window.top)))
+        {
+            window.top = configuration.valueFromDistanceUnits(
+                        ui->tableWidget->item(i, 0)->text().toDouble());
+        }
+        if (ui->tableWidget->item(i, 1)->text()
+                != QString::number(configuration.valueToDistanceUnits(
+                                       window.bottom)))
+        {
+            window.bottom = configuration.valueFromDistanceUnits(
+                        ui->tableWidget->item(i, 1)->text().toDouble());
+        }
 
         configuration.windows.push_back(window);
     }

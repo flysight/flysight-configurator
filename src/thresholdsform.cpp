@@ -31,6 +31,14 @@ void ThresholdsForm::setConfiguration(const Configuration &configuration)
 void ThresholdsForm::updateConfiguration(
         Configuration &configuration)
 {
-    configuration.vThresholdFromUnits(ui->verticalEdit->text().toDouble());
-    configuration.hThresholdFromUnits(ui->horizontalEdit->text().toDouble());
+    if (ui->verticalEdit->text()
+            != QString::number(configuration.vThresholdToUnits()))
+    {
+        configuration.vThresholdFromUnits(ui->verticalEdit->text().toDouble());
+    }
+    if (ui->horizontalEdit->text()
+            != QString::number(configuration.hThresholdToUnits()))
+    {
+        configuration.hThresholdFromUnits(ui->horizontalEdit->text().toDouble());
+    }
 }

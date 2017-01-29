@@ -1,7 +1,7 @@
 #include "configuration.h"
 
-#define CMS_PER_KMH 27.778
-#define CMS_PER_MPH 44.704
+#define CMS_PER_KMH 27.77777777777778
+#define CMS_PER_MPH 44.70416666666667
 #define M_PER_FT    0.3048
 
 Configuration::Configuration(
@@ -129,7 +129,7 @@ int Configuration::valueFromSpeedUnits(
     switch (displayUnits)
     {
     case Metric: return valueInUnits * CMS_PER_KMH;
-    case Imperial: return valueInUnits * CMS_PER_MPH;
+    case Imperial: return (valueInUnits * CMS_PER_MPH + 0.5);
     }
     return 0;
 }
@@ -139,8 +139,8 @@ double Configuration::valueToSpeedUnits(
 {
     switch (displayUnits)
     {
-    case Metric: return value / CMS_PER_KMH;
-    case Imperial: return value / CMS_PER_MPH;
+    case Metric: return value / (double) CMS_PER_KMH;
+    case Imperial: return value / (double) CMS_PER_MPH;
     }
     return 0;
 }
@@ -151,7 +151,7 @@ int Configuration::valueFromDistanceUnits(
     switch (displayUnits)
     {
     case Metric: return valueInUnits;
-    case Imperial: return valueInUnits * M_PER_FT;
+    case Imperial: return (valueInUnits * M_PER_FT + 0.5);
     }
     return 0;
 }
@@ -162,7 +162,7 @@ double Configuration::valueToDistanceUnits(
     switch (displayUnits)
     {
     case Metric: return value;
-    case Imperial: return value / M_PER_FT;
+    case Imperial: return value / (double) M_PER_FT;
     }
     return 0;
 }
