@@ -177,14 +177,14 @@ void MainWindow::on_openButton_clicked()
                 configuration.alarms.back().file = result;
             }
 
-            if (!name.compare("Window_Top") && configuration.windows.length() < MAX_WINDOWS)
+            if (!name.compare("Win_Top") && configuration.windows.length() < MAX_WINDOWS)
             {
                 Configuration::Window window;
                 window.top = val;
                 window.bottom = val;
                 configuration.windows.push_back(window);
             }
-            if (!name.compare("Window_Bottom") && configuration.windows.length() < MAX_WINDOWS)
+            if (!name.compare("Win_Bottom") && configuration.windows.length() < MAX_WINDOWS)
             {
                 configuration.windows.back().bottom = val;
             }
