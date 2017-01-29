@@ -222,3 +222,89 @@ int Configuration::toneFromUnits(
         return valueInUnits;
     }
 }
+
+double Configuration::minRateToUnits() const
+{
+    return rateToUnits(minRateValue);
+}
+
+void Configuration::minRateFromUnits(
+        double valueInUnits)
+{
+    minRateValue = rateFromUnits(valueInUnits);
+}
+
+double Configuration::maxRateToUnits() const
+{
+    return rateToUnits(maxRateValue);
+}
+
+void Configuration::maxRateFromUnits(
+        double valueInUnits)
+{
+    maxRateValue = rateFromUnits(valueInUnits);
+}
+
+double Configuration::rateToUnits(
+        int value) const
+{
+    switch(rateMode)
+    {
+    case Configuration::HorizontalSpeed:
+    case Configuration::VerticalSpeed:
+    case Configuration::TotalSpeed:
+        return valueToSpeedUnits(value);
+    case Configuration::GlideRatio:
+    case Configuration::InverseGlideRatio:
+        return value / 100.;
+    case Configuration::ValueMagnitude:
+        switch (toneMode)
+        {
+        case Configuration::HorizontalSpeed:
+        case Configuration::VerticalSpeed:
+        case Configuration::TotalSpeed:
+            return valueToSpeedUnits(value);
+        case Configuration::GlideRatio:
+        case Configuration::InverseGlideRatio:
+            return value / 100.;
+        default:
+            return value;
+        }
+    case Configuration::ValueChange:
+        return value / 100.;
+    default:
+        return value;
+    }
+}
+
+int Configuration::rateFromUnits(
+        double valueInUnits) const
+{
+    switch(rateMode)
+    {
+    case Configuration::HorizontalSpeed:
+    case Configuration::VerticalSpeed:
+    case Configuration::TotalSpeed:
+        return valueFromSpeedUnits(valueInUnits);
+    case Configuration::GlideRatio:
+    case Configuration::InverseGlideRatio:
+        return valueInUnits * 100;
+    case Configuration::ValueMagnitude:
+        switch (toneMode)
+        {
+        case Configuration::HorizontalSpeed:
+        case Configuration::VerticalSpeed:
+        case Configuration::TotalSpeed:
+            return valueFromSpeedUnits(valueInUnits);
+        case Configuration::GlideRatio:
+        case Configuration::InverseGlideRatio:
+            return valueInUnits * 100;
+        default:
+            return valueInUnits;
+        }
+    case Configuration::ValueChange:
+        return valueInUnits * 100;
+    default:
+        return valueInUnits;
+    }
+}

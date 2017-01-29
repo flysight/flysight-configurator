@@ -36,6 +36,8 @@ private:
     Configuration configuration;
     Units currentUnits;
 
+    bool updating;
+
     void saveAlarm(QTextStream &out, const Configuration::Alarm &alarm, bool firstAlarm);
     void saveWindow(QTextStream &out, const Configuration::Window window);
 
@@ -47,7 +49,8 @@ private slots:
     void on_saveAsButton_clicked();
 
     void setUnits(int newUnits);
-    void updateAllPages();
+    void updatePages();
+    void updateConfiguration();
 };
 
 #endif // MAINWINDOW_H

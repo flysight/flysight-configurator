@@ -27,7 +27,8 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    updating(false)
 {
     ui->setupUi(this);
 
@@ -51,7 +52,7 @@ MainWindow::MainWindow(QWidget *parent) :
         connect(this, SIGNAL(configurationChanged(Configuration)),
                 page, SLOT(setConfiguration(Configuration)));
         connect(page, SIGNAL(selectionChanged()),
-                this, SLOT(updateAllPages()));
+                this, SLOT(updateConfiguration()));
     }
 
     ui->listWidget->setCurrentRow(0);
@@ -70,7 +71,7 @@ MainWindow::MainWindow(QWidget *parent) :
             this, SLOT(setUnits(int)));
 
     // Initial update
-    emit configurationChanged(configuration);
+    updatePages();
 }
 
 MainWindow::~MainWindow()
@@ -194,7 +195,7 @@ void MainWindow::on_openButton_clicked()
         }
 
         // Update configuration
-        emit configurationChanged(configuration);
+        updatePages();
     }
     else
     {
@@ -434,17 +435,29 @@ void MainWindow::setUnits(
     ui->unitsComboBox->setCurrentIndex(units);
 
     // Update pages from configuration
-    emit configurationChanged(configuration);
+    updatePages();
 }
 
-void MainWindow::updateAllPages()
+void MainWindow::updateConfiguration()
 {
+    if (updating) return;
+
     // Update configuration from pages
     foreach(ConfigurationPage *page, pages)
     {
         page->updateConfiguration(configuration);
     }
 
+    // Now update the configuration pages
+    updatePages();
+}
+
+void MainWindow::updatePages()
+{
+    updating = true;
+
     // Update pages from configuration
     emit configurationChanged(configuration);
+
+    updating = false;
 }

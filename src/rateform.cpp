@@ -37,24 +37,18 @@ void RateForm::setConfiguration(const Configuration &configuration)
     default:
         ui->modeComboBox->setCurrentIndex(configuration.rateMode);
     }
-
     ui->minimumValueEdit->setText(
-                QString::number(configuration.minRateValue));
+                QString::number(configuration.minRateToUnits()));
     ui->maximumValueEdit->setText(
-                QString::number(configuration.maxRateValue));
+                QString::number(configuration.maxRateToUnits()));
     ui->minimumEdit->setText(
                 QString::number(configuration.minRate / 100.));
     ui->maximumEdit->setText(
                 QString::number(configuration.maxRate / 100.));
     ui->flatlineCheckBox->setChecked(configuration.flatline);
 
-    Configuration::Mode mode;
-    int i = ui->modeComboBox->currentIndex();
-    if (i <= 4) mode = (Configuration::Mode) i;
-    else        mode = (Configuration::Mode) (i + 3);
-
     QString unitText;
-    switch((Configuration::Mode) mode)
+    switch(configuration.rateMode)
     {
     case Configuration::HorizontalSpeed:
     case Configuration::VerticalSpeed:
@@ -78,7 +72,6 @@ void RateForm::setConfiguration(const Configuration &configuration)
         default:
             break;
         }
-
         if (unitText.isEmpty())
         {
             ui->minimumLabel->setText(tr("Minimum magnitude:"));
@@ -108,8 +101,8 @@ void RateForm::updateConfiguration(
     if (i <= 4) configuration.rateMode = (Configuration::Mode) i;
     else        configuration.rateMode = (Configuration::Mode) (i + 3);
 
-    configuration.minRateValue = ui->minimumValueEdit->text().toInt();
-    configuration.maxRateValue = ui->maximumValueEdit->text().toInt();
+    configuration.minRateFromUnits(ui->minimumValueEdit->text().toDouble());
+    configuration.maxRateFromUnits(ui->maximumValueEdit->text().toDouble());
     configuration.minRate = ui->minimumEdit->text().toDouble() * 100;
     configuration.maxRate = ui->maximumEdit->text().toDouble() * 100;
     configuration.flatline = ui->flatlineCheckBox->isChecked();

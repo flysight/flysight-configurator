@@ -148,6 +148,15 @@ public:
 
     double toneToUnits(int value) const;
     int toneFromUnits(double valueInUnits) const;
+
+    double minRateToUnits() const;
+    void minRateFromUnits(double valueInUnits);
+
+    double maxRateToUnits() const;
+    void maxRateFromUnits(double valueInUnits);
+
+    double rateToUnits(int value) const;
+    int rateFromUnits(double valueInUnits) const;
 };
 
 #endif // CONFIGURATION_H
