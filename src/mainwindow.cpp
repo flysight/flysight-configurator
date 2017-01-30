@@ -129,8 +129,8 @@ void MainWindow::on_openButton_clicked()
             HANDLE_VALUE("Volume", configuration.toneVolume, int);
 
             HANDLE_VALUE("Mode_2", configuration.rateMode, Configuration::Mode);
-            HANDLE_VALUE("Min_2", configuration.minRateValue, int);
-            HANDLE_VALUE("Max_2", configuration.maxRateValue, int);
+            HANDLE_VALUE("Min_Val_2", configuration.minRateValue, int);
+            HANDLE_VALUE("Max_Val_2", configuration.maxRateValue, int);
             HANDLE_VALUE("Min_Rate", configuration.minRate, int);
             HANDLE_VALUE("Max_Rate", configuration.maxRate, int);
             HANDLE_VALUE("Flatline", configuration.flatline, bool);
