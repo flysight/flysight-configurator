@@ -35,44 +35,36 @@ ToneForm::~ToneForm()
 }
 
 void ToneForm::setConfiguration(
-        const Configuration &configuration,
-        UpdateOptions options)
+        const Configuration &configuration)
 {
-    if (options & Options)
+    ui->modeComboBox->setCurrentIndex(configuration.toneMode);
+    ui->minimumEdit->setText(
+                QString::number(configuration.minToneToUnits()));
+    ui->maximumEdit->setText(
+                QString::number(configuration.maxToneToUnits()));
+    ui->limitComboBox->setCurrentIndex(configuration.limits);
+    ui->volumeComboBox->setCurrentIndex(configuration.toneVolume);
+
+    Configuration::Mode mode
+            = (Configuration::Mode) ui->modeComboBox->currentIndex();
+
+    switch ((Configuration::Mode) mode)
     {
-        ui->modeComboBox->setCurrentIndex(configuration.toneMode);
-    }
-
-    if (options & Values)
-    {
-        ui->minimumEdit->setText(
-                    QString::number(configuration.minToneToUnits()));
-        ui->maximumEdit->setText(
-                    QString::number(configuration.maxToneToUnits()));
-        ui->limitComboBox->setCurrentIndex(configuration.limits);
-        ui->volumeComboBox->setCurrentIndex(configuration.toneVolume);
-
-        Configuration::Mode mode
-                = (Configuration::Mode) ui->modeComboBox->currentIndex();
-
-        switch ((Configuration::Mode) mode)
-        {
-        case Configuration::HorizontalSpeed:
-        case Configuration::VerticalSpeed:
-        case Configuration::TotalSpeed:
-            ui->minimumLabel->setText(tr("Minimum speed (%1):").arg(configuration.speedUnits()));
-            ui->maximumLabel->setText(tr("Maximum speed (%1):").arg(configuration.speedUnits()));
-            break;
-        case Configuration::GlideRatio:
-        case Configuration::InverseGlideRatio:
-            ui->minimumLabel->setText(tr("Minimum glide ratio:"));
-            ui->maximumLabel->setText(tr("Maximum glide ratio:"));
-            break;
-        default:
-            ui->minimumLabel->setText(tr("Minimum:"));
-            ui->maximumLabel->setText(tr("Maximum:"));
-            break;
-        }
+    case Configuration::HorizontalSpeed:
+    case Configuration::VerticalSpeed:
+    case Configuration::TotalSpeed:
+        ui->minimumLabel->setText(tr("Minimum speed (%1):").arg(configuration.speedUnits()));
+        ui->maximumLabel->setText(tr("Maximum speed (%1):").arg(configuration.speedUnits()));
+        break;
+    case Configuration::GlideRatio:
+    case Configuration::InverseGlideRatio:
+        ui->minimumLabel->setText(tr("Minimum glide ratio:"));
+        ui->maximumLabel->setText(tr("Maximum glide ratio:"));
+        break;
+    default:
+        ui->minimumLabel->setText(tr("Minimum:"));
+        ui->maximumLabel->setText(tr("Maximum:"));
+        break;
     }
 }
 

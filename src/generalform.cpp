@@ -25,11 +25,8 @@ GeneralForm::~GeneralForm()
 }
 
 void GeneralForm::setConfiguration(
-        const Configuration &configuration,
-        UpdateOptions options)
+        const Configuration &configuration)
 {
-    if (!(options & Values)) return;
-
     ui->modelComboBox->setCurrentIndex(configuration.model);
     ui->rateSpinBox->setValue(configuration.rate);
 }

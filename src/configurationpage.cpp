@@ -15,9 +15,7 @@ void ConfigurationPage::updateConfiguration(
 }
 
 void ConfigurationPage::setConfiguration(
-        const Configuration &configuration,
-        UpdateOptions options)
+        const Configuration &configuration)
 {
     Q_UNUSED(configuration);
-    Q_UNUSED(options);
 }

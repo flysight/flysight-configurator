@@ -19,8 +19,7 @@ public:
 
     void updateConfiguration(Configuration &configuration,
                              UpdateOptions options) const;
-    void setConfiguration(const Configuration &configuration,
-                          UpdateOptions options);
+    void setConfiguration(const Configuration &configuration);
 
 private:
     Ui::SilenceForm *ui;

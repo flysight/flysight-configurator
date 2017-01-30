@@ -21,8 +21,7 @@ public:
 
     virtual void updateConfiguration(Configuration &configuration,
                                      UpdateOptions options) const;
-    virtual void setConfiguration(const Configuration &configuration,
-                                  UpdateOptions options);
+    virtual void setConfiguration(const Configuration &configuration);
 
 signals:
     void selectionChanged();

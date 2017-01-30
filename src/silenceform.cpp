@@ -62,11 +62,8 @@ void SilenceForm::updateControls()
 }
 
 void SilenceForm::setConfiguration(
-        const Configuration &configuration,
-        UpdateOptions options)
+        const Configuration &configuration)
 {
-    if (!(options & Values)) return;
-
     ui->tableWidget->setHorizontalHeaderLabels(
                 QStringList()
                 << tr("Top (%1)").arg(configuration.distanceUnits())

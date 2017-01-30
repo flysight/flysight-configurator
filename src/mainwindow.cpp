@@ -461,11 +461,7 @@ void MainWindow::updatePages()
     // Update pages from configuration
     foreach(ConfigurationPage *page, pages)
     {
-        page->setConfiguration(configuration, ConfigurationPage::Options);
-    }
-    foreach(ConfigurationPage *page, pages)
-    {
-        page->setConfiguration(configuration, ConfigurationPage::Values);
+        page->setConfiguration(configuration);
     }
 
     updating = false;

@@ -16,11 +16,8 @@ ThresholdsForm::~ThresholdsForm()
 }
 
 void ThresholdsForm::setConfiguration(
-        const Configuration &configuration,
-        UpdateOptions options)
+        const Configuration &configuration)
 {
-    if (!(options & Values)) return;
-
     ui->verticalLabel->setText(
                 tr("Vertical speed (%1):").arg(configuration.speedUnits()));
     ui->horizontalLabel->setText(

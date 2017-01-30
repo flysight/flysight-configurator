@@ -23,11 +23,8 @@ InitializationForm::~InitializationForm()
 }
 
 void InitializationForm::setConfiguration(
-        const Configuration &configuration,
-        UpdateOptions options)
+        const Configuration &configuration)
 {
-    if (!(options & Values)) return;
-
     ui->modeComboBox->setCurrentIndex(configuration.initMode);
     ui->filenameEdit->setText(configuration.initFile);
 }

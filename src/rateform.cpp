@@ -27,79 +27,71 @@ RateForm::~RateForm()
 }
 
 void RateForm::setConfiguration(
-        const Configuration &configuration,
-        UpdateOptions options)
+        const Configuration &configuration)
 {
-    if (options & Options)
+    switch (configuration.rateMode)
     {
-        switch (configuration.rateMode)
-        {
-        case Configuration::ValueChange:
-        case Configuration::ValueMagnitude:
-            ui->modeComboBox->setCurrentIndex(configuration.rateMode - 3);
-            break;
-        default:
-            ui->modeComboBox->setCurrentIndex(configuration.rateMode);
-        }
+    case Configuration::ValueChange:
+    case Configuration::ValueMagnitude:
+        ui->modeComboBox->setCurrentIndex(configuration.rateMode - 3);
+        break;
+    default:
+        ui->modeComboBox->setCurrentIndex(configuration.rateMode);
     }
+    ui->minimumValueEdit->setText(
+                QString::number(configuration.minRateToUnits()));
+    ui->maximumValueEdit->setText(
+                QString::number(configuration.maxRateToUnits()));
+    ui->minimumEdit->setText(
+                QString::number(configuration.minRate / 100.));
+    ui->maximumEdit->setText(
+                QString::number(configuration.maxRate / 100.));
+    ui->flatlineCheckBox->setChecked(configuration.flatline);
 
-    if (options & Values)
+    QString unitText;
+    switch(configuration.rateMode)
     {
-        ui->minimumValueEdit->setText(
-                    QString::number(configuration.minRateToUnits()));
-        ui->maximumValueEdit->setText(
-                    QString::number(configuration.maxRateToUnits()));
-        ui->minimumEdit->setText(
-                    QString::number(configuration.minRate / 100.));
-        ui->maximumEdit->setText(
-                    QString::number(configuration.maxRate / 100.));
-        ui->flatlineCheckBox->setChecked(configuration.flatline);
-
-        QString unitText;
-        switch(configuration.rateMode)
+    case Configuration::HorizontalSpeed:
+    case Configuration::VerticalSpeed:
+    case Configuration::TotalSpeed:
+        ui->minimumLabel->setText(tr("Minimum speed (%1):").arg(configuration.speedUnits()));
+        ui->maximumLabel->setText(tr("Maximum speed (%1):").arg(configuration.speedUnits()));
+        break;
+    case Configuration::GlideRatio:
+    case Configuration::InverseGlideRatio:
+        ui->minimumLabel->setText(tr("Minimum glide ratio:"));
+        ui->maximumLabel->setText(tr("Maximum glide ratio:"));
+        break;
+    case Configuration::ValueMagnitude:
+        switch (configuration.toneMode)
         {
         case Configuration::HorizontalSpeed:
         case Configuration::VerticalSpeed:
         case Configuration::TotalSpeed:
-            ui->minimumLabel->setText(tr("Minimum speed (%1):").arg(configuration.speedUnits()));
-            ui->maximumLabel->setText(tr("Maximum speed (%1):").arg(configuration.speedUnits()));
-            break;
-        case Configuration::GlideRatio:
-        case Configuration::InverseGlideRatio:
-            ui->minimumLabel->setText(tr("Minimum glide ratio:"));
-            ui->maximumLabel->setText(tr("Maximum glide ratio:"));
-            break;
-        case Configuration::ValueMagnitude:
-            switch (configuration.toneMode)
-            {
-            case Configuration::HorizontalSpeed:
-            case Configuration::VerticalSpeed:
-            case Configuration::TotalSpeed:
-                unitText = configuration.speedUnits();
-                break;
-            default:
-                break;
-            }
-            if (unitText.isEmpty())
-            {
-                ui->minimumLabel->setText(tr("Minimum magnitude:"));
-                ui->maximumLabel->setText(tr("Maximum magnitude:"));
-            }
-            else
-            {
-                ui->minimumLabel->setText(tr("Minimum magnitude (%1):").arg(unitText));
-                ui->maximumLabel->setText(tr("Maximum magnitude (%1):").arg(unitText));
-            }
-            break;
-        case Configuration::ValueChange:
-            ui->minimumLabel->setText(tr("Minimum change (percent/s):"));
-            ui->maximumLabel->setText(tr("Maximum change (percent/s):"));
+            unitText = configuration.speedUnits();
             break;
         default:
-            ui->minimumLabel->setText(tr("Minimum:"));
-            ui->maximumLabel->setText(tr("Maximum:"));
             break;
         }
+        if (unitText.isEmpty())
+        {
+            ui->minimumLabel->setText(tr("Minimum magnitude:"));
+            ui->maximumLabel->setText(tr("Maximum magnitude:"));
+        }
+        else
+        {
+            ui->minimumLabel->setText(tr("Minimum magnitude (%1):").arg(unitText));
+            ui->maximumLabel->setText(tr("Maximum magnitude (%1):").arg(unitText));
+        }
+        break;
+    case Configuration::ValueChange:
+        ui->minimumLabel->setText(tr("Minimum change (percent/s):"));
+        ui->maximumLabel->setText(tr("Maximum change (percent/s):"));
+        break;
+    default:
+        ui->minimumLabel->setText(tr("Minimum:"));
+        ui->maximumLabel->setText(tr("Maximum:"));
+        break;
     }
 }
 

@@ -16,11 +16,8 @@ MiscellaneousForm::~MiscellaneousForm()
 }
 
 void MiscellaneousForm::setConfiguration(
-        const Configuration &configuration,
-        UpdateOptions options)
+        const Configuration &configuration)
 {
-    if (!(options & Values)) return;
-
     ui->timezoneEdit->setText(
                 QString::number(configuration.timeZoneOffset));
     ui->adjustedCheckBox->setChecked(configuration.adjustSpeed);

@@ -30,11 +30,8 @@ SpeechForm::~SpeechForm()
 }
 
 void SpeechForm::setConfiguration(
-        const Configuration &configuration,
-        UpdateOptions options)
+        const Configuration &configuration)
 {
-    if (!(options & Values)) return;
-
     ui->modeComboBox->setCurrentIndex(configuration.speechMode);
     ui->unitsComboBox->setCurrentIndex(configuration.speechUnits);
     ui->rateEdit->setText(

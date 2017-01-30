@@ -72,11 +72,8 @@ void AlarmForm::updateControls()
 }
 
 void AlarmForm::setConfiguration(
-        const Configuration &configuration,
-        UpdateOptions options)
+        const Configuration &configuration)
 {
-    if (!(options & Values)) return;
-
     ui->windowAboveLabel->setText(
                 tr("Window above (%1):").arg(configuration.distanceUnits()));
     ui->windowBelowLabel->setText(
