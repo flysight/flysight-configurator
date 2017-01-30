@@ -15,16 +15,23 @@ MiscellaneousForm::~MiscellaneousForm()
     delete ui;
 }
 
-void MiscellaneousForm::setConfiguration(const Configuration &configuration)
+void MiscellaneousForm::setConfiguration(
+        const Configuration &configuration,
+        UpdateOptions options)
 {
+    if (!(options & Values)) return;
+
     ui->timezoneEdit->setText(
                 QString::number(configuration.timeZoneOffset));
     ui->adjustedCheckBox->setChecked(configuration.adjustSpeed);
 }
 
 void MiscellaneousForm::updateConfiguration(
-        Configuration &configuration)
+        Configuration &configuration,
+        UpdateOptions options) const
 {
+    if (!(options & Values)) return;
+
     configuration.timeZoneOffset = ui->timezoneEdit->text().toInt();
     configuration.adjustSpeed = ui->adjustedCheckBox->isChecked();
 }

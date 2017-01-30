@@ -16,13 +16,14 @@ public:
     ~AlarmForm();
 
     QString title() const { return "Alarms"; }
-    void updateConfiguration(Configuration &configuration);
+
+    void updateConfiguration(Configuration &configuration,
+                             UpdateOptions options) const;
+    void setConfiguration(const Configuration &configuration,
+                          UpdateOptions options);
 
 private:
     Ui::AlarmForm *ui;
-
-public slots:
-    void setConfiguration(const Configuration &configuration);
 
 private slots:
     int add();

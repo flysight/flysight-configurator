@@ -61,8 +61,12 @@ void SilenceForm::updateControls()
     ui->removeButton->setEnabled(select->hasSelection());
 }
 
-void SilenceForm::setConfiguration(const Configuration &configuration)
+void SilenceForm::setConfiguration(
+        const Configuration &configuration,
+        UpdateOptions options)
 {
+    if (!(options & Values)) return;
+
     ui->tableWidget->setHorizontalHeaderLabels(
                 QStringList()
                 << tr("Top (%1)").arg(configuration.distanceUnits())
@@ -89,8 +93,11 @@ void SilenceForm::setConfiguration(const Configuration &configuration)
 }
 
 void SilenceForm::updateConfiguration(
-        Configuration &configuration)
+        Configuration &configuration,
+        UpdateOptions options) const
 {
+    if (!(options & Values)) return;
+
     // Clear windows in configuration
     configuration.windows.clear();
 

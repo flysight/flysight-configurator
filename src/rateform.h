@@ -18,13 +18,14 @@ public:
     ~RateForm();
 
     QString title() const { return "Rate"; }
-    void updateConfiguration(Configuration &configuration);
+
+    void updateConfiguration(Configuration &configuration,
+                             UpdateOptions options) const;
+    void setConfiguration(const Configuration &configuration,
+                          UpdateOptions options);
 
 private:
     Ui::RateForm *ui;
-
-public slots:
-    void setConfiguration(const Configuration &configuration);
 };
 
 #endif // RATEFORM_H

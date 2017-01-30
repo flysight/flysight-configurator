@@ -49,10 +49,8 @@ MainWindow::MainWindow(QWidget *parent) :
         ui->listWidget->addItem(page->title());
         ui->stackedWidget->addWidget(page);
 
-        connect(this, SIGNAL(configurationChanged(Configuration)),
-                page, SLOT(setConfiguration(Configuration)));
         connect(page, SIGNAL(selectionChanged()),
-                this, SLOT(updateConfiguration()));
+                this, SLOT(updateConfigurationOptions()));
     }
 
     ui->listWidget->setCurrentRow(0);
@@ -226,7 +224,7 @@ void MainWindow::on_saveAsButton_clicked()
         // Update configuration
         foreach(ConfigurationPage *page, pages)
         {
-            page->updateConfiguration(configuration);
+            page->updateConfiguration(configuration, ConfigurationPage::Values);
         }
 
         QTextStream out(&file);
@@ -427,7 +425,7 @@ void MainWindow::setUnits(
     // Update configuration from pages
     foreach(ConfigurationPage *page, pages)
     {
-        page->updateConfiguration(configuration);
+        page->updateConfiguration(configuration, ConfigurationPage::Values);
     }
 
     // Update display units
@@ -438,14 +436,18 @@ void MainWindow::setUnits(
     updatePages();
 }
 
-void MainWindow::updateConfiguration()
+void MainWindow::updateConfigurationOptions()
 {
     if (updating) return;
 
     // Update configuration from pages
     foreach(ConfigurationPage *page, pages)
     {
-        page->updateConfiguration(configuration);
+        page->updateConfiguration(configuration, ConfigurationPage::Values);
+    }
+    foreach(ConfigurationPage *page, pages)
+    {
+        page->updateConfiguration(configuration, ConfigurationPage::Options);
     }
 
     // Now update the configuration pages
@@ -457,7 +459,14 @@ void MainWindow::updatePages()
     updating = true;
 
     // Update pages from configuration
-    emit configurationChanged(configuration);
+    foreach(ConfigurationPage *page, pages)
+    {
+        page->setConfiguration(configuration, ConfigurationPage::Options);
+    }
+    foreach(ConfigurationPage *page, pages)
+    {
+        page->setConfiguration(configuration, ConfigurationPage::Values);
+    }
 
     updating = false;
 }

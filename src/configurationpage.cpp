@@ -7,7 +7,17 @@ ConfigurationPage::ConfigurationPage(QWidget *parent) :
 }
 
 void ConfigurationPage::updateConfiguration(
-        Configuration &configuration)
+        Configuration &configuration,
+        UpdateOptions options) const
 {
     Q_UNUSED(configuration);
+    Q_UNUSED(options);
+}
+
+void ConfigurationPage::setConfiguration(
+        const Configuration &configuration,
+        UpdateOptions options)
+{
+    Q_UNUSED(configuration);
+    Q_UNUSED(options);
 }

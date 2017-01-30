@@ -29,8 +29,12 @@ SpeechForm::~SpeechForm()
     delete ui;
 }
 
-void SpeechForm::setConfiguration(const Configuration &configuration)
+void SpeechForm::setConfiguration(
+        const Configuration &configuration,
+        UpdateOptions options)
 {
+    if (!(options & Values)) return;
+
     ui->modeComboBox->setCurrentIndex(configuration.speechMode);
     ui->unitsComboBox->setCurrentIndex(configuration.speechUnits);
     ui->rateEdit->setText(
@@ -40,8 +44,11 @@ void SpeechForm::setConfiguration(const Configuration &configuration)
 }
 
 void SpeechForm::updateConfiguration(
-        Configuration &configuration)
+        Configuration &configuration,
+        UpdateOptions options) const
 {
+    if (!(options & Values)) return;
+
     configuration.speechMode = (Configuration::Mode) ui->modeComboBox->currentIndex();
     configuration.speechUnits = (Configuration::Units) ui->unitsComboBox->currentIndex();
     configuration.speechRate = ui->rateEdit->text().toInt();

@@ -16,13 +16,14 @@ public:
     ~SpeechForm();
 
     QString title() const { return "Speech"; }
-    void updateConfiguration(Configuration &configuration);
+
+    void updateConfiguration(Configuration &configuration,
+                             UpdateOptions options) const;
+    void setConfiguration(const Configuration &configuration,
+                          UpdateOptions options);
 
 private:
     Ui::SpeechForm *ui;
-
-public slots:
-    void setConfiguration(const Configuration &configuration);
 };
 
 #endif // SPEECHFORM_H

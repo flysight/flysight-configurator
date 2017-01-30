@@ -71,8 +71,12 @@ void AlarmForm::updateControls()
     ui->removeButton->setEnabled(select->hasSelection());
 }
 
-void AlarmForm::setConfiguration(const Configuration &configuration)
+void AlarmForm::setConfiguration(
+        const Configuration &configuration,
+        UpdateOptions options)
 {
+    if (!(options & Values)) return;
+
     ui->windowAboveLabel->setText(
                 tr("Window above (%1):").arg(configuration.distanceUnits()));
     ui->windowBelowLabel->setText(
@@ -114,8 +118,11 @@ void AlarmForm::setConfiguration(const Configuration &configuration)
 }
 
 void AlarmForm::updateConfiguration(
-        Configuration &configuration)
+        Configuration &configuration,
+        UpdateOptions options) const
 {
+    if (!(options & Values)) return;
+
     if (ui->windowAboveEdit->text()
             != QString::number(configuration.alarmWindowAboveToUnits()))
     {

@@ -41,16 +41,13 @@ private:
     void saveAlarm(QTextStream &out, const Configuration::Alarm &alarm, bool firstAlarm);
     void saveWindow(QTextStream &out, const Configuration::Window window);
 
-signals:
-    void configurationChanged(const Configuration &configuration);
-
 private slots:
     void on_openButton_clicked();
     void on_saveAsButton_clicked();
 
     void setUnits(int newUnits);
     void updatePages();
-    void updateConfiguration();
+    void updateConfigurationOptions();
 };
 
 #endif // MAINWINDOW_H

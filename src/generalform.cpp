@@ -24,15 +24,22 @@ GeneralForm::~GeneralForm()
     delete ui;
 }
 
-void GeneralForm::setConfiguration(const Configuration &configuration)
+void GeneralForm::setConfiguration(
+        const Configuration &configuration,
+        UpdateOptions options)
 {
+    if (!(options & Values)) return;
+
     ui->modelComboBox->setCurrentIndex(configuration.model);
     ui->rateSpinBox->setValue(configuration.rate);
 }
 
 void GeneralForm::updateConfiguration(
-        Configuration &configuration)
+        Configuration &configuration,
+        UpdateOptions options) const
 {
+    if (!(options & Values)) return;
+
     configuration.model = (Configuration::Model) ui->modelComboBox->currentIndex();
     configuration.rate = ui->rateSpinBox->value();
 }

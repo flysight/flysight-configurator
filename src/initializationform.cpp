@@ -22,15 +22,22 @@ InitializationForm::~InitializationForm()
     delete ui;
 }
 
-void InitializationForm::setConfiguration(const Configuration &configuration)
+void InitializationForm::setConfiguration(
+        const Configuration &configuration,
+        UpdateOptions options)
 {
+    if (!(options & Values)) return;
+
     ui->modeComboBox->setCurrentIndex(configuration.initMode);
     ui->filenameEdit->setText(configuration.initFile);
 }
 
 void InitializationForm::updateConfiguration(
-        Configuration &configuration)
+        Configuration &configuration,
+        UpdateOptions options) const
 {
+    if (!(options & Values)) return;
+
     configuration.initMode = (Configuration::InitMode) ui->modeComboBox->currentIndex();
     configuration.initFile = ui->filenameEdit->text();
 }

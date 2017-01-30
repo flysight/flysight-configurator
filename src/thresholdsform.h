@@ -16,13 +16,14 @@ public:
     ~ThresholdsForm();
 
     QString title() const { return "Thresholds"; }
-    void updateConfiguration(Configuration &configuration);
+
+    void updateConfiguration(Configuration &configuration,
+                             UpdateOptions options) const;
+    void setConfiguration(const Configuration &configuration,
+                          UpdateOptions options);
 
 private:
     Ui::ThresholdsForm *ui;
-
-public slots:
-    void setConfiguration(const Configuration &configuration);
 };
 
 #endif // THRESHOLDSFORM_H

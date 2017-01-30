@@ -15,8 +15,12 @@ ThresholdsForm::~ThresholdsForm()
     delete ui;
 }
 
-void ThresholdsForm::setConfiguration(const Configuration &configuration)
+void ThresholdsForm::setConfiguration(
+        const Configuration &configuration,
+        UpdateOptions options)
 {
+    if (!(options & Values)) return;
+
     ui->verticalLabel->setText(
                 tr("Vertical speed (%1):").arg(configuration.speedUnits()));
     ui->horizontalLabel->setText(
@@ -29,8 +33,11 @@ void ThresholdsForm::setConfiguration(const Configuration &configuration)
 }
 
 void ThresholdsForm::updateConfiguration(
-        Configuration &configuration)
+        Configuration &configuration,
+        UpdateOptions options) const
 {
+    if (!(options & Values)) return;
+
     if (ui->verticalEdit->text()
             != QString::number(configuration.vThresholdToUnits()))
     {

@@ -26,93 +26,109 @@ RateForm::~RateForm()
     delete ui;
 }
 
-void RateForm::setConfiguration(const Configuration &configuration)
+void RateForm::setConfiguration(
+        const Configuration &configuration,
+        UpdateOptions options)
 {
-    switch (configuration.rateMode)
+    if (options & Options)
     {
-    case Configuration::ValueChange:
-    case Configuration::ValueMagnitude:
-        ui->modeComboBox->setCurrentIndex(configuration.rateMode - 3);
-        break;
-    default:
-        ui->modeComboBox->setCurrentIndex(configuration.rateMode);
+        switch (configuration.rateMode)
+        {
+        case Configuration::ValueChange:
+        case Configuration::ValueMagnitude:
+            ui->modeComboBox->setCurrentIndex(configuration.rateMode - 3);
+            break;
+        default:
+            ui->modeComboBox->setCurrentIndex(configuration.rateMode);
+        }
     }
-    ui->minimumValueEdit->setText(
-                QString::number(configuration.minRateToUnits()));
-    ui->maximumValueEdit->setText(
-                QString::number(configuration.maxRateToUnits()));
-    ui->minimumEdit->setText(
-                QString::number(configuration.minRate / 100.));
-    ui->maximumEdit->setText(
-                QString::number(configuration.maxRate / 100.));
-    ui->flatlineCheckBox->setChecked(configuration.flatline);
 
-    QString unitText;
-    switch(configuration.rateMode)
+    if (options & Values)
     {
-    case Configuration::HorizontalSpeed:
-    case Configuration::VerticalSpeed:
-    case Configuration::TotalSpeed:
-        ui->minimumLabel->setText(tr("Minimum speed (%1):").arg(configuration.speedUnits()));
-        ui->maximumLabel->setText(tr("Maximum speed (%1):").arg(configuration.speedUnits()));
-        break;
-    case Configuration::GlideRatio:
-    case Configuration::InverseGlideRatio:
-        ui->minimumLabel->setText(tr("Minimum glide ratio:"));
-        ui->maximumLabel->setText(tr("Maximum glide ratio:"));
-        break;
-    case Configuration::ValueMagnitude:
-        switch (configuration.toneMode)
+        ui->minimumValueEdit->setText(
+                    QString::number(configuration.minRateToUnits()));
+        ui->maximumValueEdit->setText(
+                    QString::number(configuration.maxRateToUnits()));
+        ui->minimumEdit->setText(
+                    QString::number(configuration.minRate / 100.));
+        ui->maximumEdit->setText(
+                    QString::number(configuration.maxRate / 100.));
+        ui->flatlineCheckBox->setChecked(configuration.flatline);
+
+        QString unitText;
+        switch(configuration.rateMode)
         {
         case Configuration::HorizontalSpeed:
         case Configuration::VerticalSpeed:
         case Configuration::TotalSpeed:
-            unitText = configuration.speedUnits();
+            ui->minimumLabel->setText(tr("Minimum speed (%1):").arg(configuration.speedUnits()));
+            ui->maximumLabel->setText(tr("Maximum speed (%1):").arg(configuration.speedUnits()));
+            break;
+        case Configuration::GlideRatio:
+        case Configuration::InverseGlideRatio:
+            ui->minimumLabel->setText(tr("Minimum glide ratio:"));
+            ui->maximumLabel->setText(tr("Maximum glide ratio:"));
+            break;
+        case Configuration::ValueMagnitude:
+            switch (configuration.toneMode)
+            {
+            case Configuration::HorizontalSpeed:
+            case Configuration::VerticalSpeed:
+            case Configuration::TotalSpeed:
+                unitText = configuration.speedUnits();
+                break;
+            default:
+                break;
+            }
+            if (unitText.isEmpty())
+            {
+                ui->minimumLabel->setText(tr("Minimum magnitude:"));
+                ui->maximumLabel->setText(tr("Maximum magnitude:"));
+            }
+            else
+            {
+                ui->minimumLabel->setText(tr("Minimum magnitude (%1):").arg(unitText));
+                ui->maximumLabel->setText(tr("Maximum magnitude (%1):").arg(unitText));
+            }
+            break;
+        case Configuration::ValueChange:
+            ui->minimumLabel->setText(tr("Minimum change (percent/s):"));
+            ui->maximumLabel->setText(tr("Maximum change (percent/s):"));
             break;
         default:
+            ui->minimumLabel->setText(tr("Minimum:"));
+            ui->maximumLabel->setText(tr("Maximum:"));
             break;
         }
-        if (unitText.isEmpty())
-        {
-            ui->minimumLabel->setText(tr("Minimum magnitude:"));
-            ui->maximumLabel->setText(tr("Maximum magnitude:"));
-        }
-        else
-        {
-            ui->minimumLabel->setText(tr("Minimum magnitude (%1):").arg(unitText));
-            ui->maximumLabel->setText(tr("Maximum magnitude (%1):").arg(unitText));
-        }
-        break;
-    case Configuration::ValueChange:
-        ui->minimumLabel->setText(tr("Minimum change (percent/s):"));
-        ui->maximumLabel->setText(tr("Maximum change (percent/s):"));
-        break;
-    default:
-        ui->minimumLabel->setText(tr("Minimum:"));
-        ui->maximumLabel->setText(tr("Maximum:"));
-        break;
     }
 }
 
 void RateForm::updateConfiguration(
-        Configuration &configuration)
+        Configuration &configuration,
+        UpdateOptions options) const
 {
-    int i = ui->modeComboBox->currentIndex();
-    if (i <= 4) configuration.rateMode = (Configuration::Mode) i;
-    else        configuration.rateMode = (Configuration::Mode) (i + 3);
-
-    if (ui->minimumValueEdit->text()
-            != QString::number(configuration.minRateToUnits()))
+    if (options & Options)
     {
-        configuration.minRateFromUnits(ui->minimumValueEdit->text().toDouble());
-    }
-    if (ui->maximumValueEdit->text()
-            != QString::number(configuration.maxRateToUnits()))
-    {
-        configuration.maxRateFromUnits(ui->maximumValueEdit->text().toDouble());
+        int i = ui->modeComboBox->currentIndex();
+        if (i <= 4) configuration.rateMode = (Configuration::Mode) i;
+        else        configuration.rateMode = (Configuration::Mode) (i + 3);
     }
 
-    configuration.minRate = ui->minimumEdit->text().toDouble() * 100;
-    configuration.maxRate = ui->maximumEdit->text().toDouble() * 100;
-    configuration.flatline = ui->flatlineCheckBox->isChecked();
+    if (options & Values)
+    {
+        if (ui->minimumValueEdit->text()
+                != QString::number(configuration.minRateToUnits()))
+        {
+            configuration.minRateFromUnits(ui->minimumValueEdit->text().toDouble());
+        }
+        if (ui->maximumValueEdit->text()
+                != QString::number(configuration.maxRateToUnits()))
+        {
+            configuration.maxRateFromUnits(ui->maximumValueEdit->text().toDouble());
+        }
+
+        configuration.minRate = ui->minimumEdit->text().toDouble() * 100;
+        configuration.maxRate = ui->maximumEdit->text().toDouble() * 100;
+        configuration.flatline = ui->flatlineCheckBox->isChecked();
+    }
 }

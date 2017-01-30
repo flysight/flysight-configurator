@@ -16,13 +16,14 @@ public:
     ~ToneForm();
 
     QString title() const { return "Tone"; }
-    void updateConfiguration(Configuration &configuration);
+
+    void updateConfiguration(Configuration &configuration,
+                             UpdateOptions options) const;
+    void setConfiguration(const Configuration &configuration,
+                          UpdateOptions options);
 
 private:
     Ui::ToneForm *ui;
-
-public slots:
-    void setConfiguration(const Configuration &configuration);
 };
 
 #endif // TONEFORM_H

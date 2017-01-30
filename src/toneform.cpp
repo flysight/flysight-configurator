@@ -34,55 +34,71 @@ ToneForm::~ToneForm()
     delete ui;
 }
 
-void ToneForm::setConfiguration(const Configuration &configuration)
+void ToneForm::setConfiguration(
+        const Configuration &configuration,
+        UpdateOptions options)
 {
-    ui->modeComboBox->setCurrentIndex(configuration.toneMode);
-    ui->minimumEdit->setText(
-                QString::number(configuration.minToneToUnits()));
-    ui->maximumEdit->setText(
-                QString::number(configuration.maxToneToUnits()));
-    ui->limitComboBox->setCurrentIndex(configuration.limits);
-    ui->volumeComboBox->setCurrentIndex(configuration.toneVolume);
-
-    Configuration::Mode mode
-            = (Configuration::Mode) ui->modeComboBox->currentIndex();
-
-    switch ((Configuration::Mode) mode)
+    if (options & Options)
     {
-    case Configuration::HorizontalSpeed:
-    case Configuration::VerticalSpeed:
-    case Configuration::TotalSpeed:
-        ui->minimumLabel->setText(tr("Minimum speed (%1):").arg(configuration.speedUnits()));
-        ui->maximumLabel->setText(tr("Maximum speed (%1):").arg(configuration.speedUnits()));
-        break;
-    case Configuration::GlideRatio:
-    case Configuration::InverseGlideRatio:
-        ui->minimumLabel->setText(tr("Minimum glide ratio:"));
-        ui->maximumLabel->setText(tr("Maximum glide ratio:"));
-        break;
-    default:
-        ui->minimumLabel->setText(tr("Minimum:"));
-        ui->maximumLabel->setText(tr("Maximum:"));
-        break;
+        ui->modeComboBox->setCurrentIndex(configuration.toneMode);
+    }
+
+    if (options & Values)
+    {
+        ui->minimumEdit->setText(
+                    QString::number(configuration.minToneToUnits()));
+        ui->maximumEdit->setText(
+                    QString::number(configuration.maxToneToUnits()));
+        ui->limitComboBox->setCurrentIndex(configuration.limits);
+        ui->volumeComboBox->setCurrentIndex(configuration.toneVolume);
+
+        Configuration::Mode mode
+                = (Configuration::Mode) ui->modeComboBox->currentIndex();
+
+        switch ((Configuration::Mode) mode)
+        {
+        case Configuration::HorizontalSpeed:
+        case Configuration::VerticalSpeed:
+        case Configuration::TotalSpeed:
+            ui->minimumLabel->setText(tr("Minimum speed (%1):").arg(configuration.speedUnits()));
+            ui->maximumLabel->setText(tr("Maximum speed (%1):").arg(configuration.speedUnits()));
+            break;
+        case Configuration::GlideRatio:
+        case Configuration::InverseGlideRatio:
+            ui->minimumLabel->setText(tr("Minimum glide ratio:"));
+            ui->maximumLabel->setText(tr("Maximum glide ratio:"));
+            break;
+        default:
+            ui->minimumLabel->setText(tr("Minimum:"));
+            ui->maximumLabel->setText(tr("Maximum:"));
+            break;
+        }
     }
 }
 
 void ToneForm::updateConfiguration(
-        Configuration &configuration)
+        Configuration &configuration,
+        UpdateOptions options) const
 {
-    configuration.toneMode = (Configuration::Mode) ui->modeComboBox->currentIndex();
-
-    if (ui->minimumEdit->text()
-            != QString::number(configuration.minToneToUnits()))
+    if (options & Options)
     {
-        configuration.minToneFromUnits(ui->minimumEdit->text().toDouble());
-    }
-    if (ui->maximumEdit->text()
-            != QString::number(configuration.maxToneToUnits()))
-    {
-        configuration.maxToneFromUnits(ui->maximumEdit->text().toDouble());
+        configuration.toneMode = (Configuration::Mode) ui->modeComboBox->currentIndex();
     }
 
-    configuration.limits = (Configuration::Limits) ui->limitComboBox->currentIndex();
-    configuration.toneVolume = ui->volumeComboBox->currentIndex();
+    if (options & Values)
+    {
+        if (ui->minimumEdit->text()
+                != QString::number(configuration.minToneToUnits()))
+        {
+            configuration.minToneFromUnits(ui->minimumEdit->text().toDouble());
+        }
+        if (ui->maximumEdit->text()
+                != QString::number(configuration.maxToneToUnits()))
+        {
+            configuration.maxToneFromUnits(ui->maximumEdit->text().toDouble());
+        }
+
+        configuration.limits = (Configuration::Limits) ui->limitComboBox->currentIndex();
+        configuration.toneVolume = ui->volumeComboBox->currentIndex();
+    }
 }
