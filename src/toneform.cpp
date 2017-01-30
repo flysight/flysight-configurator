@@ -71,8 +71,18 @@ void ToneForm::updateConfiguration(
         Configuration &configuration)
 {
     configuration.toneMode = (Configuration::Mode) ui->modeComboBox->currentIndex();
-    configuration.minToneFromUnits(ui->minimumEdit->text().toDouble());
-    configuration.maxToneFromUnits(ui->maximumEdit->text().toDouble());
+
+    if (ui->minimumEdit->text()
+            != QString::number(configuration.minToneToUnits()))
+    {
+        configuration.minToneFromUnits(ui->minimumEdit->text().toDouble());
+    }
+    if (ui->maximumEdit->text()
+            != QString::number(configuration.maxToneToUnits()))
+    {
+        configuration.maxToneFromUnits(ui->maximumEdit->text().toDouble());
+    }
+
     configuration.limits = (Configuration::Limits) ui->limitComboBox->currentIndex();
     configuration.toneVolume = ui->volumeComboBox->currentIndex();
 }

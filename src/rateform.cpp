@@ -101,8 +101,17 @@ void RateForm::updateConfiguration(
     if (i <= 4) configuration.rateMode = (Configuration::Mode) i;
     else        configuration.rateMode = (Configuration::Mode) (i + 3);
 
-    configuration.minRateFromUnits(ui->minimumValueEdit->text().toDouble());
-    configuration.maxRateFromUnits(ui->maximumValueEdit->text().toDouble());
+    if (ui->minimumValueEdit->text()
+            != QString::number(configuration.minRateToUnits()))
+    {
+        configuration.minRateFromUnits(ui->minimumValueEdit->text().toDouble());
+    }
+    if (ui->maximumValueEdit->text()
+            != QString::number(configuration.maxRateToUnits()))
+    {
+        configuration.maxRateFromUnits(ui->maximumValueEdit->text().toDouble());
+    }
+
     configuration.minRate = ui->minimumEdit->text().toDouble() * 100;
     configuration.maxRate = ui->maximumEdit->text().toDouble() * 100;
     configuration.flatline = ui->flatlineCheckBox->isChecked();
