@@ -84,8 +84,8 @@ void RateForm::setConfiguration(const Configuration &configuration)
         }
         break;
     case Configuration::ValueChange:
-        ui->minimumLabel->setText(tr("Minimum change (percent):"));
-        ui->maximumLabel->setText(tr("Maximum change (percent):"));
+        ui->minimumLabel->setText(tr("Minimum change (percent/s):"));
+        ui->maximumLabel->setText(tr("Maximum change (percent/s):"));
         break;
     default:
         ui->minimumLabel->setText(tr("Minimum:"));
