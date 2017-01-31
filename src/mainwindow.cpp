@@ -344,6 +344,7 @@ void MainWindow::on_saveAsButton_clicked()
         out << "; NOTE:    Alarm elevations are given in meters above ground" << endl;
         out << ";          elevation, which is specified in DZ_Elev." << endl << endl;
 
+        out << "Window:     " << QString("%1").arg(configuration.alarmWindowAbove, 5) << " ; Alarm window (m)" << endl;
         out << "Win_Above:  " << QString("%1").arg(configuration.alarmWindowAbove, 5) << " ; Alarm window (m)" << endl;
         out << "Win_Below:  " << QString("%1").arg(configuration.alarmWindowBelow, 5) << " ; Alarm window (m)" << endl;
         out << "DZ_Elev:    " << QString("%1").arg(configuration.groundElevation, 5) << " ; Ground elevation (m above sea level)" << endl << endl;
