@@ -60,3 +60,10 @@ FORMS    += mainwindow.ui \
     alarmform.ui \
     silenceform.ui \
     miscellaneousform.ui
+
+win32 {
+    RC_ICONS = FlySightConfigurator.ico
+}
+else {
+    ICON = FlySightConfigurator.icns
+}
