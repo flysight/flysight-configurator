@@ -159,4 +159,6 @@ public:
     int rateFromUnits(double valueInUnits) const;
 };
 
+bool operator==(const Configuration &a, const Configuration &b);
+
 #endif // CONFIGURATION_H

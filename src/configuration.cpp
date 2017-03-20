@@ -308,3 +308,61 @@ int Configuration::rateFromUnits(
         return valueInUnits;
     }
 }
+
+bool operator==(
+        const Configuration &a,
+        const Configuration &b)
+{
+    if (a.model != b.model) return false;
+    if (a.rate  != b.rate)  return false;
+
+
+    if (a.toneMode != b.toneMode) return false;
+    if (a.minTone != b.minTone) return false;
+    if (a.maxTone != b.maxTone) return false;
+    if (a.limits != b.limits) return false;
+    if (a.toneVolume != b.toneVolume) return false;
+
+    if (a.rateMode != b.rateMode) return false;
+    if (a.minRateValue != b.minRateValue) return false;
+    if (a.maxRateValue != b.maxRateValue) return false;
+    if (a.minRate != b.minRate) return false;
+    if (a.maxRate != b.maxRate) return false;
+    if (a.flatline != b.flatline) return false;
+
+    if (a.speechMode != b.speechMode) return false;
+    if (a.speechUnits != b.speechUnits) return false;
+    if (a.speechRate != b.speechRate) return false;
+    if (a.speechDecimals != b.speechDecimals) return false;
+    if (a.speechVolume != b.speechVolume) return false;
+
+    if (a.vThreshold != b.vThreshold) return false;
+    if (a.hThreshold != b.hThreshold) return false;
+
+    if (a.adjustSpeed != b.adjustSpeed) return false;
+    if (a.timeZoneOffset != b.timeZoneOffset) return false;
+
+    if (a.initMode != b.initMode) return false;
+    if (a.initFile != b.initFile) return false;
+
+    if (a.alarmWindowAbove != b.alarmWindowAbove) return false;
+    if (a.alarmWindowBelow != b.alarmWindowBelow) return false;
+    if (a.groundElevation != b.groundElevation) return false;
+
+    if (a.alarms.size() != b.alarms.size()) return false;
+    for (int i = 0; i < a.alarms.size(); ++i)
+    {
+        if (a.alarms[i].elevation != b.alarms[i].elevation) return false;
+        if (a.alarms[i].mode != b.alarms[i].mode) return false;
+        if (a.alarms[i].file != b.alarms[i].file) return false;
+    }
+
+    if (a.windows.size() != b.windows.size()) return false;
+    for (int i = 0; i < a.windows.size(); ++i)
+    {
+        if (a.windows[i].top != b.windows[i].top) return false;
+        if (a.windows[i].bottom != b.windows[i].bottom) return false;
+    }
+
+    return true;
+}

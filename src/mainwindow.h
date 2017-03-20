@@ -27,6 +27,9 @@ public:
 
     Units units() const { return currentUnits; }
 
+protected:
+    void closeEvent(QCloseEvent *event);
+
 private:
     typedef QVector< ConfigurationPage* > Pages;
 
@@ -34,16 +37,30 @@ private:
 
     Pages pages;
     Configuration configuration;
+    Configuration savedConfiguration;
     Units currentUnits;
 
     bool updating;
 
+    QString curFile;
+
+    bool save();
+    bool saveAs();
+
+    bool loadFile(const QString &fileName);
+    bool saveFile(const QString &fileName);
+
     void saveAlarm(QTextStream &out, const Configuration::Alarm &alarm, bool firstAlarm);
     void saveWindow(QTextStream &out, const Configuration::Window window);
 
+    void setCurrentFile(const QString &fileName);
+    bool maybeSave();
+
 private slots:
-    void on_openButton_clicked();
-    void on_saveAsButton_clicked();
+    void on_actionNew_triggered();
+    void on_actionOpen_triggered();
+    void on_actionSave_triggered();
+    void on_actionSaveAs_triggered();
 
     void setUnits(int newUnits);
     void updatePages();
