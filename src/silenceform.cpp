@@ -5,6 +5,8 @@
 
 #include "configuration.h"
 
+#define MAX_WINDOWS 2
+
 SilenceForm::SilenceForm(QWidget *parent) :
     ConfigurationPage(parent),
     ui(new Ui::SilenceForm)
@@ -43,6 +45,8 @@ int SilenceForm::add()
     ui->tableWidget->setItem(i, 0, new QTableWidgetItem());
     ui->tableWidget->setItem(i, 1, new QTableWidgetItem());
 
+    updateControls();
+
     return i;
 }
 
@@ -53,12 +57,15 @@ void SilenceForm::remove()
     {
         ui->tableWidget->model()->removeRow(list.first().row());
     }
+
+    updateControls();
 }
 
 void SilenceForm::updateControls()
 {
     QItemSelectionModel *select = ui->tableWidget->selectionModel();
     ui->removeButton->setEnabled(select->hasSelection());
+    ui->addButton->setEnabled(ui->tableWidget->rowCount() < MAX_WINDOWS);
 }
 
 void SilenceForm::setConfiguration(
@@ -78,6 +85,8 @@ void SilenceForm::setConfiguration(
     // Add silence windows
     foreach (Configuration::Window window, configuration.windows)
     {
+        if (ui->tableWidget->rowCount() >= MAX_WINDOWS) break;
+
         int i = add();
 
         ui->tableWidget->setItem(i, 0, new QTableWidgetItem(

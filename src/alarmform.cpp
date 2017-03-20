@@ -5,6 +5,8 @@
 
 #include "configuration.h"
 
+#define MAX_ALARMS 10
+
 AlarmForm::AlarmForm(QWidget *parent) :
     ConfigurationPage(parent),
     ui(new Ui::AlarmForm)
@@ -53,6 +55,8 @@ int AlarmForm::add()
 
     ui->tableWidget->setCellWidget(i, 1, combo);
 
+    updateControls();
+
     return i;
 }
 
@@ -63,12 +67,15 @@ void AlarmForm::remove()
     {
         ui->tableWidget->model()->removeRow(list.first().row());
     }
+
+    updateControls();
 }
 
 void AlarmForm::updateControls()
 {
     QItemSelectionModel *select = ui->tableWidget->selectionModel();
     ui->removeButton->setEnabled(select->hasSelection());
+    ui->addButton->setEnabled(ui->tableWidget->rowCount() < MAX_ALARMS);
 }
 
 void AlarmForm::setConfiguration(
@@ -101,6 +108,8 @@ void AlarmForm::setConfiguration(
     // Add alarms
     foreach (Configuration::Alarm alarm, configuration.alarms)
     {
+        if (ui->tableWidget->rowCount() >= MAX_ALARMS) break;
+
         int i = add();
 
         ui->tableWidget->setItem(i, 0, new QTableWidgetItem(
