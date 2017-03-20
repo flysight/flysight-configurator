@@ -27,7 +27,14 @@ GeneralForm::~GeneralForm()
 void GeneralForm::setConfiguration(
         const Configuration &configuration)
 {
-    ui->modelComboBox->setCurrentIndex(configuration.model);
+    switch (configuration.model)
+    {
+    case Configuration::Portable:
+        ui->modelComboBox->setCurrentIndex(configuration.model);
+        break;
+    default:
+        ui->modelComboBox->setCurrentIndex(configuration.model - 1);
+    }
     ui->rateSpinBox->setValue(configuration.rate);
 }
 
@@ -37,6 +44,9 @@ void GeneralForm::updateConfiguration(
 {
     if (!(options & Values)) return;
 
-    configuration.model = (Configuration::Model) ui->modelComboBox->currentIndex();
+    int i = ui->modelComboBox->currentIndex();
+    if (i == 0) configuration.model = (Configuration::Model) i;
+    else        configuration.model = (Configuration::Model) (i + 1);
+
     configuration.rate = ui->rateSpinBox->value();
 }
