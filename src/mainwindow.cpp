@@ -239,6 +239,12 @@ bool MainWindow::saveFile(
     // Remember last file read
     settings.setValue("folder", QFileInfo(fileName).absoluteFilePath());
 
+    // Update configuration
+    foreach(ConfigurationPage *page, pages)
+    {
+        page->updateConfiguration(configuration, ConfigurationPage::Values);
+    }
+
     QTextStream out(&file);
 
     out << "; For information on configuring FlySight, please go to" << endl;
