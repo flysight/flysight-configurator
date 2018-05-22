@@ -69,6 +69,9 @@ Configuration::Configuration(
 
     alarms.clear();
     windows.clear();
+
+    altitudeUnits = Feet;
+    altitudeStep = 0;
 }
 
 QString Configuration::speedUnits() const
