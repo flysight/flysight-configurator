@@ -36,6 +36,7 @@
 #include <QTextStream>
 
 #include "alarmform.h"
+#include "altitudeform.h"
 #include "configurationpage.h"
 #include "generalform.h"
 #include "initializationform.h"
@@ -65,6 +66,7 @@ MainWindow::MainWindow(QWidget *parent) :
     pages.append(new MiscellaneousForm());
     pages.append(new InitializationForm());
     pages.append(new AlarmForm());
+    pages.append(new AltitudeForm());
     pages.append(new SilenceForm());
 
     // Add pages to configuration window
@@ -197,6 +199,9 @@ if (!name.compare(s)) { (w) = (t) (val); }
         HANDLE_VALUE("TZ_Offset", configuration.timeZoneOffset, int);
 
         HANDLE_VALUE("Init_Mode", configuration.initMode, Configuration::InitMode);
+
+        HANDLE_VALUE("Alt_Units", configuration.altitudeUnits, Configuration::AltitudeUnits);
+        HANDLE_VALUE("Alt_Step", configuration.altitudeStep, int);
 
         HANDLE_VALUE("Window", configuration.alarmWindowAbove, int);
         HANDLE_VALUE("Window", configuration.alarmWindowBelow, int);
@@ -407,6 +412,26 @@ bool MainWindow::saveFile(
             firstAlarm = false;
         }
     }
+
+    out << "; Altitude mode settings" << endl << endl;
+
+    out << "; WARNING: GPS measurements depend on very weak signals" << endl;
+    out << ";          received from orbiting satellites. As such, they" << endl;
+    out << ";          are prone to interference, and should NEVER be" << endl;
+    out << ";          relied upon for life saving purposes." << endl << endl;
+
+    out << ";          UNDER NO CIRCUMSTANCES SHOULD ALTITUDE MODE BE" << endl;
+    out << ";          USED TO INDICATE DEPLOYMENT OR BREAKOFF ALTITUDE." << endl << endl;
+
+    out << "; NOTE:    Altitude is given relative to ground elevation," << endl;
+    out << ";          which is specified in DZ_Elev. Altitude mode will" << endl;
+    out << ";          not function below 1500 m above ground." << endl << endl;;
+
+    out << "Alt_Units:  " << QString("%1").arg(configuration.altitudeUnits, 5) << " ; Altitude units" << endl;
+    out << "                  ;   0 = m" << endl;
+    out << "                  ;   1 = ft" << endl;
+    out << "Alt_Step:   " << QString("%1").arg(configuration.altitudeStep, 5) << " ; Altitude between announcements" << endl;
+    out << "                  ;   0 = No altitude" << endl << endl;
 
     out << "; Silence windows" << endl << endl;
 

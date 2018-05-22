@@ -94,6 +94,11 @@ public:
         int bottom;
     } Window;
 
+    typedef enum {
+        Meters = 0,
+        Feet   = 1
+    } AltitudeUnits;
+
     typedef QVector< Alarm > Alarms;
     typedef QVector< Window > Windows;
 
@@ -136,6 +141,9 @@ public:
 
     Alarms alarms;
     Windows windows;
+
+    AltitudeUnits altitudeUnits;
+    int altitudeStep;
 
     Configuration(DisplayUnits units = Metric);
 

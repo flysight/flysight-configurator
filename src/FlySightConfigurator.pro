@@ -35,7 +35,8 @@ SOURCES += main.cpp\
     initializationform.cpp \
     alarmform.cpp \
     silenceform.cpp \
-    miscellaneousform.cpp
+    miscellaneousform.cpp \
+    altitudeform.cpp
 
 HEADERS  += mainwindow.h \
     configuration.h \
@@ -48,7 +49,8 @@ HEADERS  += mainwindow.h \
     initializationform.h \
     alarmform.h \
     silenceform.h \
-    miscellaneousform.h
+    miscellaneousform.h \
+    altitudeform.h
 
 FORMS    += mainwindow.ui \
     generalform.ui \
@@ -59,7 +61,8 @@ FORMS    += mainwindow.ui \
     initializationform.ui \
     alarmform.ui \
     silenceform.ui \
-    miscellaneousform.ui
+    miscellaneousform.ui \
+    altitudeform.ui
 
 win32 {
     RC_ICONS = FlySightConfigurator.ico
