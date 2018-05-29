@@ -224,11 +224,11 @@ if (!name.compare(s)) { (w) = (t) (val); }
             alarm.file = QString();
             configuration.alarms.push_back(alarm);
         }
-        if (!name.compare("Alarm_Type") && configuration.alarms.length() < MAX_ALARMS)
+        if (!name.compare("Alarm_Type"))
         {
             configuration.alarms.back().mode = (Configuration::AlarmMode) val;
         }
-        if (!name.compare("Alarm_File") && configuration.alarms.length() < MAX_ALARMS)
+        if (!name.compare("Alarm_File"))
         {
             configuration.alarms.back().file = result;
         }
@@ -240,7 +240,7 @@ if (!name.compare(s)) { (w) = (t) (val); }
             window.bottom = val;
             configuration.windows.push_back(window);
         }
-        if (!name.compare("Win_Bottom") && configuration.windows.length() < MAX_WINDOWS)
+        if (!name.compare("Win_Bottom"))
         {
             configuration.windows.back().bottom = val;
         }
