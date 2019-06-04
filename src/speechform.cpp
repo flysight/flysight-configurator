@@ -85,12 +85,16 @@ int SpeechForm::add()
     combo->addItem("Dive angle", Configuration::DiveAngle);
     combo->setCurrentIndex(2);
 
+    connect(combo, SIGNAL(currentIndexChanged(int)),
+            this, SIGNAL(selectionChanged()));
+
     ui->tableWidget->setCellWidget(i, 0, combo);
 
     combo = new QComboBox;
 
-    combo->addItem("km/h");
-    combo->addItem("mph");
+    combo->setEnabled(false);
+    combo->addItem("none");
+    combo->addItem("none");
     combo->setCurrentIndex(1);
 
     ui->tableWidget->setCellWidget(i, 1, combo);
@@ -150,6 +154,35 @@ void SpeechForm::setConfiguration(
         combo->setCurrentIndex(index);
 
         combo = (QComboBox*) ui->tableWidget->cellWidget(i, 1);
+
+        combo->clear();
+        switch (speech.mode)
+        {
+        case Configuration::HorizontalSpeed:
+        case Configuration::VerticalSpeed:
+        case Configuration::TotalSpeed:
+            combo->setEnabled(true);
+            combo->addItem("km/h");
+            combo->addItem("mph");
+            break;
+        case Configuration::Altitude:
+            combo->setEnabled(true);
+            combo->addItem("meters");
+            combo->addItem("feet");
+            break;
+        case Configuration::GlideRatio:
+        case Configuration::InverseGlideRatio:
+            combo->setEnabled(false);
+            combo->addItem("none");
+            combo->addItem("none");
+            break;
+        case Configuration::DiveAngle:
+            combo->setEnabled(false);
+            combo->addItem("degrees");
+            combo->addItem("degrees");
+            break;
+        }
+
         combo->setCurrentIndex(speech.units);
 
         QSpinBox *spin = (QSpinBox *) ui->tableWidget->cellWidget(i, 2);
