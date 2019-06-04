@@ -46,9 +46,9 @@ SpeechForm::SpeechForm(QWidget *parent) :
     ui->volumeComboBox->setCurrentIndex(8);
 
     // Add headers
-    ui->tableWidget->setColumnCount(3);
+    ui->tableWidget->setColumnCount(4);
     ui->tableWidget->setHorizontalHeaderLabels(
-                QStringList() << tr("Mode") << tr("Units") << tr("Decimal places"));
+                QStringList() << tr("Mode") << tr("Units") << tr("Decimals") << tr("Step"));
 
     // Connect add/remove buttons
     connect(ui->addButton, SIGNAL(clicked(bool)),
@@ -105,6 +105,11 @@ int SpeechForm::add()
     spin->setValue(0);
 
     ui->tableWidget->setCellWidget(i, 2, spin);
+
+    // Disable step by default
+    QTableWidgetItem *item = new QTableWidgetItem();
+    ui->tableWidget->setItem(i, 3, item);
+    item->setFlags(item->flags() & ~Qt::ItemIsEditable);
 
     updateControls();
 
@@ -187,6 +192,20 @@ void SpeechForm::setConfiguration(
 
         QSpinBox *spin = (QSpinBox *) ui->tableWidget->cellWidget(i, 2);
         spin->setValue(speech.decimals);
+
+        QTableWidgetItem *item = ui->tableWidget->item(i, 3);
+        item->setText(QString::number(speech.decimals));
+
+        if (speech.mode != Configuration::Altitude)
+        {
+            spin->setEnabled(true);
+            item->setFlags(item->flags() & ~Qt::ItemIsEditable);
+        }
+        else
+        {
+            spin->setEnabled(false);
+            item->setFlags(item->flags() | Qt::ItemIsEditable);
+        }
     }
 }
 
@@ -213,8 +232,15 @@ void SpeechForm::updateConfiguration(
         combo = (QComboBox*) ui->tableWidget->cellWidget(i, 1);
         speech.units = (Configuration::Units) combo->currentIndex();
 
-        QSpinBox *spin = (QSpinBox*) ui->tableWidget->cellWidget(i, 2);
-        speech.decimals = spin->value();
+        if (speech.mode != Configuration::Altitude)
+        {
+            QSpinBox *spin = (QSpinBox*) ui->tableWidget->cellWidget(i, 2);
+            speech.decimals = spin->value();
+        }
+        else
+        {
+            speech.decimals = ui->tableWidget->item(i, 3)->text().toInt();
+        }
 
         configuration.speeches.push_back(speech);
     }
