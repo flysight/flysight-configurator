@@ -52,8 +52,10 @@ public:
         GlideRatio        = 2,
         InverseGlideRatio = 3,
         TotalSpeed        = 4,
+        Altitude          = 5,
         ValueMagnitude    = 8,
-        ValueChange       = 9
+        ValueChange       = 9,
+        DiveAngle         = 11
     } Mode;
 
     typedef enum {

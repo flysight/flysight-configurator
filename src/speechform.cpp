@@ -81,6 +81,7 @@ int SpeechForm::add()
     combo->addItem("Glide ratio");
     combo->addItem("Inverse glide ratio");
     combo->addItem("Total speed");
+    combo->addItem("Altitude above ground");
     combo->setCurrentIndex(2);
 
     ui->tableWidget->setCellWidget(i, 0, combo);
