@@ -32,11 +32,12 @@ ToneForm::ToneForm(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->modeComboBox->addItem("Horizontal speed");
-    ui->modeComboBox->addItem("Vertical speed");
-    ui->modeComboBox->addItem("Glide ratio");
-    ui->modeComboBox->addItem("Inverse glide ratio");
-    ui->modeComboBox->addItem("Total speed");
+    ui->modeComboBox->addItem("Horizontal speed", Configuration::HorizontalSpeed);
+    ui->modeComboBox->addItem("Vertical speed", Configuration::VerticalSpeed);
+    ui->modeComboBox->addItem("Glide ratio", Configuration::GlideRatio);
+    ui->modeComboBox->addItem("Inverse glide ratio", Configuration::InverseGlideRatio);
+    ui->modeComboBox->addItem("Total speed", Configuration::TotalSpeed);
+    ui->modeComboBox->addItem("Dive angle", Configuration::DiveAngle);
 
     ui->limitComboBox->addItem("No tone");
     ui->limitComboBox->addItem("Min/max tone");
@@ -60,7 +61,9 @@ ToneForm::~ToneForm()
 void ToneForm::setConfiguration(
         const Configuration &configuration)
 {
-    ui->modeComboBox->setCurrentIndex(configuration.toneMode);
+    int index = ui->modeComboBox->findData(configuration.toneMode);
+    ui->modeComboBox->setCurrentIndex(index);
+
     ui->minimumEdit->setText(
                 QString::number(configuration.minToneToUnits()));
     ui->maximumEdit->setText(
@@ -68,8 +71,8 @@ void ToneForm::setConfiguration(
     ui->limitComboBox->setCurrentIndex(configuration.limits);
     ui->volumeComboBox->setCurrentIndex(configuration.toneVolume);
 
-    Configuration::Mode mode
-            = (Configuration::Mode) ui->modeComboBox->currentIndex();
+    QComboBox *combo = ui->modeComboBox;
+    Configuration::Mode mode = (Configuration::Mode) combo->itemData(combo->currentIndex()).toInt();
 
     switch ((Configuration::Mode) mode)
     {
@@ -84,6 +87,10 @@ void ToneForm::setConfiguration(
         ui->minimumLabel->setText(tr("Minimum glide ratio:"));
         ui->maximumLabel->setText(tr("Maximum glide ratio:"));
         break;
+    case Configuration::DiveAngle:
+        ui->minimumLabel->setText(tr("Minimum angle (degrees):"));
+        ui->maximumLabel->setText(tr("Maximum angle (degrees):"));
+        break;
     default:
         ui->minimumLabel->setText(tr("Minimum:"));
         ui->maximumLabel->setText(tr("Maximum:"));
@@ -97,7 +104,8 @@ void ToneForm::updateConfiguration(
 {
     if (options & Options)
     {
-        configuration.toneMode = (Configuration::Mode) ui->modeComboBox->currentIndex();
+        QComboBox *combo = ui->modeComboBox;
+        configuration.toneMode = (Configuration::Mode) combo->itemData(combo->currentIndex()).toInt();
     }
 
     if (options & Values)

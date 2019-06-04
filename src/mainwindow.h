@@ -73,6 +73,7 @@ private:
     bool loadFile(const QString &fileName);
     bool saveFile(const QString &fileName);
 
+    void saveSpeech(QTextStream &out, const Configuration::Speech &speech, bool firstSpeech);
     void saveAlarm(QTextStream &out, const Configuration::Alarm &alarm, bool firstAlarm);
     void saveWindow(QTextStream &out, const Configuration::Window window);
 

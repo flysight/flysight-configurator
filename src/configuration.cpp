@@ -48,11 +48,10 @@ Configuration::Configuration(
     maxRate = 500;
     flatline = false;
 
-    speechMode = GlideRatio;
-    speechUnits = Kilometers;
     speechRate = 0;
-    speechDecimals = 1;
     speechVolume = 8;
+
+    speeches.clear();
 
     vThreshold = 1000;
     hThreshold = 0;
@@ -356,11 +355,16 @@ bool operator==(
     if (a.maxRate != b.maxRate) return false;
     if (a.flatline != b.flatline) return false;
 
-    if (a.speechMode != b.speechMode) return false;
-    if (a.speechUnits != b.speechUnits) return false;
     if (a.speechRate != b.speechRate) return false;
-    if (a.speechDecimals != b.speechDecimals) return false;
     if (a.speechVolume != b.speechVolume) return false;
+
+    if (a.speeches.size() != b.speeches.size()) return false;
+    for (int i = 0; i < a.speeches.size(); ++i)
+    {
+        if (a.speeches[i].mode != b.speeches[i].mode) return false;
+        if (a.speeches[i].units != b.speeches[i].units) return false;
+        if (a.speeches[i].decimals != b.speeches[i].decimals) return false;
+    }
 
     if (a.vThreshold != b.vThreshold) return false;
     if (a.hThreshold != b.hThreshold) return false;

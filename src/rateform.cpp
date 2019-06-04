@@ -32,13 +32,14 @@ RateForm::RateForm(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->modeComboBox->addItem("Horizontal speed");
-    ui->modeComboBox->addItem("Vertical speed");
-    ui->modeComboBox->addItem("Glide ratio");
-    ui->modeComboBox->addItem("Inverse glide ratio");
-    ui->modeComboBox->addItem("Total speed");
-    ui->modeComboBox->addItem("Magnitude of tone value");
-    ui->modeComboBox->addItem("Change in tone value");
+    ui->modeComboBox->addItem("Horizontal speed", Configuration::HorizontalSpeed);
+    ui->modeComboBox->addItem("Vertical speed", Configuration::VerticalSpeed);
+    ui->modeComboBox->addItem("Glide ratio", Configuration::GlideRatio);
+    ui->modeComboBox->addItem("Inverse glide ratio", Configuration::InverseGlideRatio);
+    ui->modeComboBox->addItem("Total speed", Configuration::TotalSpeed);
+    ui->modeComboBox->addItem("Magnitude of tone value", Configuration::ValueMagnitude);
+    ui->modeComboBox->addItem("Change in tone value", Configuration::ValueChange);
+    ui->modeComboBox->addItem("Dive angle", Configuration::DiveAngle);
 
     connect(ui->modeComboBox, SIGNAL(currentIndexChanged(int)),
             this, SIGNAL(selectionChanged()));
@@ -52,15 +53,9 @@ RateForm::~RateForm()
 void RateForm::setConfiguration(
         const Configuration &configuration)
 {
-    switch (configuration.rateMode)
-    {
-    case Configuration::ValueChange:
-    case Configuration::ValueMagnitude:
-        ui->modeComboBox->setCurrentIndex(configuration.rateMode - 3);
-        break;
-    default:
-        ui->modeComboBox->setCurrentIndex(configuration.rateMode);
-    }
+    int index = ui->modeComboBox->findData(configuration.rateMode);
+    ui->modeComboBox->setCurrentIndex(index);
+
     ui->minimumValueEdit->setText(
                 QString::number(configuration.minRateToUnits()));
     ui->maximumValueEdit->setText(
@@ -111,6 +106,10 @@ void RateForm::setConfiguration(
         ui->minimumLabel->setText(tr("Minimum change (percent/s):"));
         ui->maximumLabel->setText(tr("Maximum change (percent/s):"));
         break;
+    case Configuration::DiveAngle:
+        ui->minimumLabel->setText(tr("Minimum angle (degrees):"));
+        ui->maximumLabel->setText(tr("Maximum angle (degrees):"));
+        break;
     default:
         ui->minimumLabel->setText(tr("Minimum:"));
         ui->maximumLabel->setText(tr("Maximum:"));
@@ -124,9 +123,8 @@ void RateForm::updateConfiguration(
 {
     if (options & Options)
     {
-        int i = ui->modeComboBox->currentIndex();
-        if (i <= 4) configuration.rateMode = (Configuration::Mode) i;
-        else        configuration.rateMode = (Configuration::Mode) (i + 3);
+        QComboBox *combo = ui->modeComboBox;
+        configuration.rateMode = (Configuration::Mode) combo->itemData(combo->currentIndex()).toInt();
     }
 
     if (options & Values)

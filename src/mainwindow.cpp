@@ -186,10 +186,7 @@ if (!name.compare(s)) { (w) = (t) (val); }
         HANDLE_VALUE("Max_Rate", configuration.maxRate, int);
         HANDLE_VALUE("Flatline", configuration.flatline, bool);
 
-        HANDLE_VALUE("Sp_Mode", configuration.speechMode, Configuration::Mode);
-        HANDLE_VALUE("Sp_Units", configuration.speechUnits, Configuration::Units);
         HANDLE_VALUE("Sp_Rate", configuration.speechRate, int);
-        HANDLE_VALUE("Sp_Dec", configuration.speechDecimals, int);
         HANDLE_VALUE("Sp_Volume", configuration.speechVolume, int);
 
         HANDLE_VALUE("V_Thresh", configuration.vThreshold, int);
@@ -243,6 +240,23 @@ if (!name.compare(s)) { (w) = (t) (val); }
         if (!name.compare("Win_Bottom"))
         {
             configuration.windows.back().bottom = val;
+        }
+
+        if (!name.compare("Sp_Mode") && configuration.alarms.length() < MAX_ALARMS)
+        {
+            Configuration::Speech speech;
+            speech.mode = (Configuration::Mode) val;
+            speech.units = Configuration::Miles;
+            speech.decimals = 1;
+            configuration.speeches.push_back(speech);
+        }
+        if (!name.compare("Sp_Units"))
+        {
+            configuration.speeches.back().units = (Configuration::Units) val;
+        }
+        if (!name.compare("Sp_Dec"))
+        {
+            configuration.speeches.back().decimals = (int) val;
         }
     }
 
@@ -299,12 +313,15 @@ bool MainWindow::saveFile(
     out << "                  ;   2 = Glide ratio" << endl;
     out << "                  ;   3 = Inverse glide ratio" << endl;
     out << "                  ;   4 = Total speed" << endl;
+    out << "                  ;   11 = Dive angle" << endl;
     out << "Min:        " << QString("%1").arg(configuration.minTone, 5) << " ; Lowest pitch value" << endl;
     out << "                  ;   cm/s        in Mode 0, 1, or 4" << endl;
     out << "                  ;   ratio * 100 in Mode 2 or 3" << endl;
+    out << "                  ;   degrees     in Mode 11" << endl;
     out << "Max:        " << QString("%1").arg(configuration.maxTone, 5) << " ; Highest pitch value" << endl;
     out << "                  ;   cm/s        in Mode 0, 1, or 4" << endl;
     out << "                  ;   ratio * 100 in Mode 2 or 3" << endl;
+    out << "                  ;   degrees     in Mode 11" << endl;
     out << "Limits:     " << QString("%1").arg(configuration.limits, 5) << " ; Behaviour when outside bounds" << endl;
     out << "                  ;   0 = No tone" << endl;
     out << "                  ;   1 = Min/max tone" << endl;
@@ -322,14 +339,17 @@ bool MainWindow::saveFile(
     out << "                  ;   4 = Total speed" << endl;
     out << "                  ;   8 = Magnitude of Value 1" << endl;
     out << "                  ;   9 = Change in Value 1" << endl;
+    out << "                  ;   11 = Dive angle" << endl;
     out << "Min_Val_2:  " << QString("%1").arg(configuration.minRateValue, 5) << " ; Lowest rate value" << endl;
     out << "                  ;   cm/s          when Mode 2 = 0, 1, or 4" << endl;
     out << "                  ;   ratio * 100   when Mode 2 = 2 or 3" << endl;
     out << "                  ;   percent * 100 when Mode 2 = 9" << endl;
+    out << "                  ;   degrees       when Mode 2 = 11" << endl;
     out << "Max_Val_2:  " << QString("%1").arg(configuration.maxRateValue, 5) << " ; Highest rate value" << endl;
     out << "                  ;   cm/s          when Mode 2 = 0, 1, or 4" << endl;
     out << "                  ;   ratio * 100   when Mode 2 = 2 or 3" << endl;
     out << "                  ;   percent * 100 when Mode 2 = 9" << endl;
+    out << "                  ;   degrees       when Mode 2 = 11" << endl;
     out << "Min_Rate:   " << QString("%1").arg(configuration.minRate, 5) << " ; Minimum rate (Hz * 100)" << endl;
     out << "Max_Rate:   " << QString("%1").arg(configuration.maxRate, 5) << " ; Maximum rate (Hz * 100)" << endl;
     out << "Flatline:   " << QString("%1").arg(configuration.flatline, 5) << " ; Flatline at minimum rate" << endl;
@@ -338,19 +358,27 @@ bool MainWindow::saveFile(
 
     out << "; Speech settings" << endl << endl;
 
-    out << "Sp_Mode:    " << QString("%1").arg(configuration.speechMode, 5) << " ; Speech mode" << endl;
-    out << "                  ;   0 = Horizontal speed" << endl;
-    out << "                  ;   1 = Vertical speed" << endl;
-    out << "                  ;   2 = Glide ratio" << endl;
-    out << "                  ;   3 = Inverse glide ratio" << endl;
-    out << "                  ;   4 = Total speed" << endl;
-    out << "Sp_Units:   " << QString("%1").arg(configuration.speechUnits, 5) << " ; Speech units" << endl;
-    out << "                  ;   0 = km/h" << endl;
-    out << "                  ;   1 = mph" << endl;
     out << "Sp_Rate:    " << QString("%1").arg(configuration.speechRate, 5) << " ; Speech rate (s)" << endl;
     out << "                  ;   0 = No speech" << endl;
-    out << "Sp_Dec:     " << QString("%1").arg(configuration.speechDecimals, 5) << " ; Decimal places for speech" << endl;
     out << "Sp_Volume:  " << QString("%1").arg(configuration.speechVolume, 5) << " ; 0 (min) to 8 (max)" << endl << endl;
+
+    if (configuration.speeches.empty())
+    {
+        Configuration::Speech speech;
+        speech.mode = Configuration::GlideRatio;
+        speech.units = Configuration::Miles;
+        speech.decimals = 1;
+        saveSpeech(out, speech, true);
+    }
+    else
+    {
+        bool firstSpeech = true;
+        foreach (Configuration::Speech speech, configuration.speeches)
+        {
+            saveSpeech(out, speech, firstSpeech);
+            firstSpeech = false;
+        }
+    }
 
     out << "; Thresholds" << endl << endl;
 
@@ -459,6 +487,31 @@ bool MainWindow::saveFile(
     setCurrentFile(fileName);
 
     return true;
+}
+
+void MainWindow::saveSpeech(
+        QTextStream &out,
+        const Configuration::Speech &speech,
+        bool firstSpeech)
+{
+    out << "Sp_Mode:    " << QString("%1").arg(speech.mode, 5) << " ; Speech mode" << endl;
+    if (firstSpeech)
+    {
+        out << "                  ;   0 = Horizontal speed" << endl;
+        out << "                  ;   1 = Vertical speed" << endl;
+        out << "                  ;   2 = Glide ratio" << endl;
+        out << "                  ;   3 = Inverse glide ratio" << endl;
+        out << "                  ;   4 = Total speed" << endl;
+        out << "                  ;   5 = Altitude above DZ_Elev" << endl;
+        out << "                  ;   11 = Dive angle" << endl;
+    }
+    out << "Sp_Units:   " << QString("%1").arg(speech.units, 5) << " ; Speech units" << endl;
+    if (firstSpeech)
+    {
+        out << "                  ;   0 = km/h" << endl;
+        out << "                  ;   1 = mph" << endl;
+    }
+    out << "Sp_Dec:     " << QString("%1").arg(speech.decimals, 5) << " ; Decimal places for speech" << endl << endl;
 }
 
 void MainWindow::saveAlarm(

@@ -52,8 +52,10 @@ public:
         GlideRatio        = 2,
         InverseGlideRatio = 3,
         TotalSpeed        = 4,
+        Altitude          = 5,
         ValueMagnitude    = 8,
-        ValueChange       = 9
+        ValueChange       = 9,
+        DiveAngle         = 11
     } Mode;
 
     typedef enum {
@@ -68,6 +70,12 @@ public:
         Miles      = 1,
         Knots      = 2
     } Units;
+
+    typedef struct {
+        Mode mode;
+        Units units;
+        int decimals;
+    } Speech;
 
     typedef enum {
         NoInit   = 0,
@@ -99,6 +107,7 @@ public:
         Feet   = 1
     } AltitudeUnits;
 
+    typedef QVector< Speech > Speeches;
     typedef QVector< Alarm > Alarms;
     typedef QVector< Window > Windows;
 
@@ -120,11 +129,10 @@ public:
     int maxRate;
     bool flatline;
 
-    Mode speechMode;
-    Units speechUnits;
     int speechRate;
-    int speechDecimals;
     int speechVolume;
+
+    Speeches speeches;
 
     int vThreshold;
     int hThreshold;
