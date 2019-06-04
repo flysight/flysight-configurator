@@ -76,12 +76,13 @@ int SpeechForm::add()
 
     QComboBox *combo = new QComboBox;
 
-    combo->addItem("Horizontal speed");
-    combo->addItem("Vertical speed");
-    combo->addItem("Glide ratio");
-    combo->addItem("Inverse glide ratio");
-    combo->addItem("Total speed");
-    combo->addItem("Altitude above ground");
+    combo->addItem("Horizontal speed", Configuration::HorizontalSpeed);
+    combo->addItem("Vertical speed", Configuration::VerticalSpeed);
+    combo->addItem("Glide ratio", Configuration::GlideRatio);
+    combo->addItem("Inverse glide ratio", Configuration::InverseGlideRatio);
+    combo->addItem("Total speed", Configuration::TotalSpeed);
+    combo->addItem("Altitude above ground", Configuration::Altitude);
+    combo->addItem("Dive angle", Configuration::DiveAngle);
     combo->setCurrentIndex(2);
 
     ui->tableWidget->setCellWidget(i, 0, combo);
@@ -145,7 +146,8 @@ void SpeechForm::setConfiguration(
         int i = add();
 
         QComboBox *combo = (QComboBox*) ui->tableWidget->cellWidget(i, 0);
-        combo->setCurrentIndex(speech.mode);
+        int index = combo->findData(speech.mode);
+        combo->setCurrentIndex(index);
 
         combo = (QComboBox*) ui->tableWidget->cellWidget(i, 1);
         combo->setCurrentIndex(speech.units);
@@ -173,7 +175,7 @@ void SpeechForm::updateConfiguration(
         Configuration::Speech speech;
 
         QComboBox *combo = (QComboBox*) ui->tableWidget->cellWidget(i, 0);
-        speech.mode = (Configuration::Mode) combo->currentIndex();
+        speech.mode = (Configuration::Mode) combo->itemData(combo->currentIndex()).toInt();
 
         combo = (QComboBox*) ui->tableWidget->cellWidget(i, 1);
         speech.units = (Configuration::Units) combo->currentIndex();
