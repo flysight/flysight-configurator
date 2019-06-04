@@ -69,6 +69,12 @@ public:
         Knots      = 2
     } Units;
 
+    typedef struct {
+        Mode mode;
+        Units units;
+        int decimals;
+    } Speech;
+
     typedef enum {
         NoInit   = 0,
         InitTest = 1,
@@ -99,6 +105,7 @@ public:
         Feet   = 1
     } AltitudeUnits;
 
+    typedef QVector< Speech > Speeches;
     typedef QVector< Alarm > Alarms;
     typedef QVector< Window > Windows;
 
@@ -120,11 +127,10 @@ public:
     int maxRate;
     bool flatline;
 
-    Mode speechMode;
-    Units speechUnits;
     int speechRate;
-    int speechDecimals;
     int speechVolume;
+
+    Speeches speeches;
 
     int vThreshold;
     int hThreshold;

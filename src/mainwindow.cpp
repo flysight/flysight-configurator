@@ -186,10 +186,7 @@ if (!name.compare(s)) { (w) = (t) (val); }
         HANDLE_VALUE("Max_Rate", configuration.maxRate, int);
         HANDLE_VALUE("Flatline", configuration.flatline, bool);
 
-        HANDLE_VALUE("Sp_Mode", configuration.speechMode, Configuration::Mode);
-        HANDLE_VALUE("Sp_Units", configuration.speechUnits, Configuration::Units);
         HANDLE_VALUE("Sp_Rate", configuration.speechRate, int);
-        HANDLE_VALUE("Sp_Dec", configuration.speechDecimals, int);
         HANDLE_VALUE("Sp_Volume", configuration.speechVolume, int);
 
         HANDLE_VALUE("V_Thresh", configuration.vThreshold, int);
@@ -243,6 +240,23 @@ if (!name.compare(s)) { (w) = (t) (val); }
         if (!name.compare("Win_Bottom"))
         {
             configuration.windows.back().bottom = val;
+        }
+
+        if (!name.compare("Sp_Mode") && configuration.alarms.length() < MAX_ALARMS)
+        {
+            Configuration::Speech speech;
+            speech.mode = (Configuration::Mode) val;
+            speech.units = Configuration::Miles;
+            speech.decimals = 1;
+            configuration.speeches.push_back(speech);
+        }
+        if (!name.compare("Sp_Units"))
+        {
+            configuration.speeches.back().units = (Configuration::Units) val;
+        }
+        if (!name.compare("Sp_Dec"))
+        {
+            configuration.speeches.back().decimals = (int) val;
         }
     }
 
@@ -338,19 +352,27 @@ bool MainWindow::saveFile(
 
     out << "; Speech settings" << endl << endl;
 
-    out << "Sp_Mode:    " << QString("%1").arg(configuration.speechMode, 5) << " ; Speech mode" << endl;
-    out << "                  ;   0 = Horizontal speed" << endl;
-    out << "                  ;   1 = Vertical speed" << endl;
-    out << "                  ;   2 = Glide ratio" << endl;
-    out << "                  ;   3 = Inverse glide ratio" << endl;
-    out << "                  ;   4 = Total speed" << endl;
-    out << "Sp_Units:   " << QString("%1").arg(configuration.speechUnits, 5) << " ; Speech units" << endl;
-    out << "                  ;   0 = km/h" << endl;
-    out << "                  ;   1 = mph" << endl;
     out << "Sp_Rate:    " << QString("%1").arg(configuration.speechRate, 5) << " ; Speech rate (s)" << endl;
     out << "                  ;   0 = No speech" << endl;
-    out << "Sp_Dec:     " << QString("%1").arg(configuration.speechDecimals, 5) << " ; Decimal places for speech" << endl;
     out << "Sp_Volume:  " << QString("%1").arg(configuration.speechVolume, 5) << " ; 0 (min) to 8 (max)" << endl << endl;
+
+    if (configuration.speeches.empty())
+    {
+        Configuration::Speech speech;
+        speech.mode = Configuration::GlideRatio;
+        speech.units = Configuration::Miles;
+        speech.decimals = 1;
+        saveSpeech(out, speech, true);
+    }
+    else
+    {
+        bool firstSpeech = true;
+        foreach (Configuration::Speech speech, configuration.speeches)
+        {
+            saveSpeech(out, speech, firstSpeech);
+            firstSpeech = false;
+        }
+    }
 
     out << "; Thresholds" << endl << endl;
 
@@ -459,6 +481,29 @@ bool MainWindow::saveFile(
     setCurrentFile(fileName);
 
     return true;
+}
+
+void MainWindow::saveSpeech(
+        QTextStream &out,
+        const Configuration::Speech &speech,
+        bool firstSpeech)
+{
+    out << "Sp_Mode:    " << QString("%1").arg(speech.mode, 5) << " ; Speech mode" << endl;
+    if (firstSpeech)
+    {
+        out << "                  ;   0 = Horizontal speed" << endl;
+        out << "                  ;   1 = Vertical speed" << endl;
+        out << "                  ;   2 = Glide ratio" << endl;
+        out << "                  ;   3 = Inverse glide ratio" << endl;
+        out << "                  ;   4 = Total speed" << endl;
+    }
+    out << "Sp_Units:   " << QString("%1").arg(speech.units, 5) << " ; Speech units" << endl;
+    if (firstSpeech)
+    {
+        out << "                  ;   0 = km/h" << endl;
+        out << "                  ;   1 = mph" << endl;
+    }
+    out << "Sp_Dec:     " << QString("%1").arg(speech.decimals, 5) << " ; Decimal places for speech" << endl << endl;
 }
 
 void MainWindow::saveAlarm(

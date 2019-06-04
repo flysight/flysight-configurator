@@ -46,6 +46,11 @@ public:
 
 private:
     Ui::SpeechForm *ui;
+
+private slots:
+    int add();
+    void remove();
+    void updateControls();
 };
 
 #endif // SPEECHFORM_H
