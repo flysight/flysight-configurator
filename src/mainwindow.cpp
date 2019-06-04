@@ -511,7 +511,13 @@ void MainWindow::saveSpeech(
         out << "                  ;   0 = km/h" << endl;
         out << "                  ;   1 = mph" << endl;
     }
-    out << "Sp_Dec:     " << QString("%1").arg(speech.decimals, 5) << " ; Decimal places for speech" << endl << endl;
+    out << "Sp_Dec:     " << QString("%1").arg(speech.decimals, 5) << " ; Speech precision" << endl;
+    if (firstSpeech)
+    {
+        out << "                  ;   Altitude step in Mode 5" << endl;
+        out << "                  ;   Decimal places in all other Modes" << endl;
+    }
+    out << endl;
 }
 
 void MainWindow::saveAlarm(
