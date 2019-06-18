@@ -508,8 +508,8 @@ void MainWindow::saveSpeech(
     out << "Sp_Units:   " << QString("%1").arg(speech.units, 5) << " ; Speech units" << endl;
     if (firstSpeech)
     {
-        out << "                  ;   0 = km/h" << endl;
-        out << "                  ;   1 = mph" << endl;
+        out << "                  ;   0 = km/h or m" << endl;
+        out << "                  ;   1 = mph or feet" << endl;
     }
     out << "Sp_Dec:     " << QString("%1").arg(speech.decimals, 5) << " ; Speech precision" << endl;
     if (firstSpeech)
