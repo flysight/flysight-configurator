@@ -113,6 +113,10 @@ public:
 
     DisplayUnits displayUnits;
 
+    QString configName;
+    QString configDescription;
+    QString configKind;
+
     Model model;
     int   rate;
 

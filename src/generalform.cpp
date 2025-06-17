@@ -59,6 +59,9 @@ void GeneralForm::setConfiguration(
         ui->modelComboBox->setCurrentIndex(configuration.model - 1);
     }
     ui->rateSpinBox->setValue(configuration.rate);
+    ui->confignameEdit->setText(configuration.configName);
+    ui->configdescriptionEdit->setText(configuration.configDescription);
+    ui->filekindEdit->setText(configuration.configKind);
 }
 
 void GeneralForm::updateConfiguration(
@@ -72,4 +75,7 @@ void GeneralForm::updateConfiguration(
     else        configuration.model = (Configuration::Model) (i + 1);
 
     configuration.rate = ui->rateSpinBox->value();
+    configuration.configName = ui->confignameEdit->text();
+    configuration.configDescription = ui->configdescriptionEdit->text();
+    configuration.configKind = ui->configkindEdit->text();
 }

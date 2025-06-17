@@ -208,6 +208,19 @@ if (!name.compare(s)) { (w) = (t) (val); }
 
 #undef HANDLE_VALUE
 
+        if (!name.compare("Config_Name"))
+        {
+            configuration.configName = result;
+        }
+        if (!name.compare("Config_Description"))
+        {
+            configuration.configDescription = result;
+        }
+        if (!name.compare("Config_Kind"))
+        {
+            configuration.configKind = result;
+        }
+
         if (!name.compare("Init_File"))
         {
             configuration.initFile = result;
@@ -293,6 +306,10 @@ bool MainWindow::saveFile(
     out << ";     http://flysight.ca/wiki" << endl << endl;
 
     out << "; GPS settings" << endl << endl;
+
+    out << "Config_Name:  " << configuration.configName.rightJustified(5) << " ; Configuration name" << endl;
+    out << "Config_Description:  " << configuration.configDescription.rightJustified(5) << " ; Configuration Description" << endl;
+    out << "Config_Kind:  " << configuration.configKind.rightJustified(5) << " ; Configuration kind. Allows to group configuration files together" << endl << endl;
 
     out << "Model:      " << QString("%1").arg(configuration.model, 5) << " ; Dynamic model" << endl;
     out << "                  ;   0 = Portable" << endl;

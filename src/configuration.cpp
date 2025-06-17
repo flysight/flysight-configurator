@@ -32,6 +32,10 @@ Configuration::Configuration(
 {
     displayUnits = units;
 
+    configName = QString("");
+    configDescription = QString("");
+    configKind = QString("");
+
     model = Airborne1G;
     rate = 200;
 
